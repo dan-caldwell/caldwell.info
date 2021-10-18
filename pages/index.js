@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import Post from '../components/post'
+import Post from '../components/Post'
 
 export async function getStaticProps() {
   // fetch list of posts
@@ -22,7 +22,7 @@ export default function IndexPage({ postList }) {
         <title>Home page</title>
       </Head>
 
-      <h1>List of posts</h1>
+      <h1 className="mx-auto max-w-xl text-3xl font-bold mt-3 mb-6">List of posts</h1>
 
       <section>
         {postList.map((post) => (

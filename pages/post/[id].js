@@ -31,17 +31,17 @@ export async function getStaticProps({ params }) {
 
 export default function Post({ title, body }) {
   return (
-    <main>
+    <main className="bg-white mx-auto max-w-xl rounded-xl shadow-md p-6 mt-6">
       <Head>
         <title>{title}</title>
       </Head>
 
       <h1>{title}</h1>
 
-      <p>{body}</p>
+      <p className="mb-3">{body}</p>
 
       <Link href="/">
-        <a>Go back to home</a>
+        <a className="text-sm text-blue-600 hover:underline">Go back to home</a>
       </Link>
     </main>
   )
