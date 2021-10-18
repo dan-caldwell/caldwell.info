@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import Post from '../components/Post';
+import Post from '../components/post';
 
 export async function getStaticProps() {
   // fetch list of posts
