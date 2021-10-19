@@ -1,13 +1,25 @@
-import Head from 'next/head'
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Head from 'next/head';
 
 import Post from '../components/post';
 
 export async function getStaticProps() {
-  // fetch list of posts
-  const response = await fetch(
-    'https://jsonplaceholder.typicode.com/posts?_page=1'
-  )
-  const postList = await response.json()
+  // Get files from the posts director
+  const files = fs.readdirSync(path.join('posts'));
+
+  // Get slugs
+  const postList = files.map(fileName => {
+    const slug = fileName.replace('.mdx', '');
+
+    // Get meta
+    const mdWithMeta = fs.readFileSync(path.join('posts', fileName), 'utf8');
+
+    const { data: meta } = matter(mdWithMeta);
+    return { slug, meta }
+  });
+
   return {
     props: {
       postList,
@@ -26,7 +38,7 @@ export default function IndexPage({ postList }) {
 
       <section>
         {postList.map((post) => (
-          <Post {...post} key={post.id} />
+          <Post {...post} key={post.slug} />
         ))}
       </section>
     </main>
