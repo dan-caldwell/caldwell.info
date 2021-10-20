@@ -29,12 +29,12 @@ export async function getStaticProps() {
 
 export default function IndexPage({ postList }) {
   return (
-    <main>
+    <main className="IndexPage">
       <Head>
         <title>Home page</title>
       </Head>
 
-      <h1 className="mx-auto max-w-xl text-3xl font-bold mt-3 mb-6">List of posts</h1>
+      <h1 className="mx-auto max-w-xl text-3xl font-bold mt-4 mb-8">List of posts</h1>
 
       <section>
         {postList.map((post) => (
