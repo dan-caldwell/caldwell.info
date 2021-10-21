@@ -1,11 +1,17 @@
 import React from "react";
-import Logo from './logo';
+import { PostMeta } from "../../utils/types";
+import LogoHeader from './logoHeader';
+import SidebarListItem from "./sidebarListItem";
 
-const Sidebar: React.FC = () => {
+export type SidebarProps = {
+    list: PostMeta[]
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ list }) => {
     return (
-        <div className="Sidebar fixed w-sidebar bg-white h-full border-r border-gray-200">
-            <Logo title="Dan Caldwell" src="/images/logo.svg" />
-            Sidebar
+        <div className="Sidebar fixed w-sidebar bg-white h-full border-r border-gray-200 p-4">
+            <LogoHeader title="Dan Caldwell" href="/" />
+            {list.map(post => <SidebarListItem key={post.slug} post={post} />)}
         </div>
     )
 }

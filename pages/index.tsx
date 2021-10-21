@@ -1,35 +1,18 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import Head from 'next/head';
+import PostUtils from '../utils/PostUtils';
+import Post from '../components/postCard';
+import PageWithSidebar from '../components/templates/pageWithSidebar';
+import { PostMeta } from '../utils/types';
 
-import Post from '../components/post';
-
-export async function getStaticProps() {
-    // Get files from the posts director
-    const files = fs.readdirSync(path.join('posts'));
-
-    // Get slugs
-    const postList = files.map(fileName => {
-        const slug = fileName.replace('.mdx', '');
-
-        // Get meta
-        const mdWithMeta = fs.readFileSync(path.join('posts', fileName), 'utf8');
-
-        const { data: meta } = matter(mdWithMeta);
-        return { slug, meta }
-    });
-
-    return {
-        props: {
-            postList,
-        },
-    }
-}
+export const getStaticProps = async () => ({
+    props: {
+        postList: PostUtils.getPostList(),
+    },
+});
 
 export default function IndexPage({ postList }) {
     return (
-        <main className="IndexPage">
+        <PageWithSidebar postList={postList}>
             <Head>
                 <title>Home page</title>
             </Head>
@@ -37,10 +20,10 @@ export default function IndexPage({ postList }) {
             <h1 className="mx-auto max-w-xl text-3xl font-bold mt-4 mb-8">List of posts</h1>
 
             <section>
-                {postList.map((post) => (
+                {postList.map((post: PostMeta) => (
                     <Post {...post} key={post.slug} />
                 ))}
             </section>
-        </main>
-    )
+        </PageWithSidebar>
+    );
 }
