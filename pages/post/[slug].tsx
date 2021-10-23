@@ -3,9 +3,10 @@ import path from 'path';
 import { MDXRemote } from 'next-mdx-remote';
 import Link from 'next/link';
 import YouTube from 'react-youtube';
-import Sidebar from '../../components/sidebar/sidebar';
 import PostUtils from '../../utils/PostUtils';
 import PageWithSidebar from '../../components/templates/pageWithSidebar';
+import { PostContext } from '../../components/context/PostContext';
+import { useContext, useEffect } from 'react';
 
 const getStaticPaths = async () => {
     const files = fs.readdirSync(path.join('posts'));
@@ -26,7 +27,8 @@ const getStaticProps = async ({ params: { slug } }) => {
         props: {
             source,
             meta,
-            postList: PostUtils.getPostList()
+            postList: PostUtils.getPostList(),
+            slug
         }
     }
 }
@@ -37,7 +39,12 @@ const mdxComponents = {
     YouTube
 }
 
-const Post = ({ source, meta: { title }, postList }) => {
+const Post = ({ source, meta: { title }, postList, slug }) => {
+    const { currentPost } = useContext(PostContext);
+    useEffect(() => {
+        currentPost.set(slug);
+        return () => currentPost.set(null);
+    }, []);
     return (
         <PageWithSidebar postList={postList}>
             <div className="mx-auto w-200 my-8">

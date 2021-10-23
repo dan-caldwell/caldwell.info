@@ -18,11 +18,12 @@ export default class PostsUtils {
             const mdWithMeta = fs.readFileSync(path.join('posts', fileName), 'utf8');
 
             const { data: meta } = matter(mdWithMeta);
-            const { title, date, excerpt } = meta;
+            const { title, date, excerpt, thumbnail } = meta;
             return { 
                 slug, 
                 title,
                 date,
+                thumbnail,
                 excerpt
             }
         });

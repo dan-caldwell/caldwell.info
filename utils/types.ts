@@ -7,4 +7,5 @@ export type PostMeta = {
     title?: string,
     date?: string,
     excerpt?: string
+    thumbnail?: string
 }
