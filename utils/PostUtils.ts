@@ -23,7 +23,7 @@ export default class PostsUtils {
                 slug, 
                 title,
                 date,
-                thumbnail,
+                thumbnail: thumbnail || null,
                 excerpt
             }
         });

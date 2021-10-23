@@ -44,7 +44,7 @@ const Post = ({ source, meta: { title }, postList, slug }) => {
     useEffect(() => {
         currentPost.set(slug);
         return () => currentPost.set(null);
-    }, []);
+    }, [currentPost, slug]);
     return (
         <PageWithSidebar postList={postList}>
             <div className="mx-auto w-200 my-8">
