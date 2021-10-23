@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "yarn handle-images && next dev",
     "build": "next build && next export",
     "start": "next start",
     "export": "next export",
-    "make-thumbnails": "npx ts-node scripts/make-thumbnails/make-thumbnails.ts"
+    "handle-images": "npx ts-node scripts/handle-images/handle-images.ts",
+    "test": "jest"
   },
   "dependencies": {
     "aws-sdk": "^2.1013.0",
     "dotenv": "^10.0.0",
     "gray-matter": "^4.0.3",
+    "jest": "^27.3.1",
+    "jsdom": "^18.0.0",
+    "marked": "^3.0.7",
     "next": "11.1.2",
     "next-mdx-remote": "^3.0.6",
     "react": "17.0.2",
@@ -21,6 +25,8 @@
     "sharp": "^0.29.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/jest": "^27.0.2",
     "@types/react": "^17.0.30",
     "autoprefixer": "^10.3.7",
     "eslint": "7.32.0",

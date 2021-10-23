@@ -3,10 +3,11 @@ import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXSource, PostMeta } from './types';
+import marked from 'marked';
 
 export default class PostsUtils {
 
-    static getPostList = (): PostMeta[] => {
+    static getPostList = ({ getHTML = false, getContent = false } = {}): PostMeta[] => {
         // Get files from the posts director
         const files = fs.readdirSync(path.join('posts'));
 
@@ -17,14 +18,17 @@ export default class PostsUtils {
             // Get meta
             const mdWithMeta = fs.readFileSync(path.join('posts', fileName), 'utf8');
 
-            const { data: meta } = matter(mdWithMeta);
+            const { data: meta, content } = matter(mdWithMeta);
             const { title, date, excerpt, thumbnail } = meta;
             return { 
                 slug, 
                 title,
                 date,
                 thumbnail: thumbnail || null,
-                excerpt
+                excerpt,
+                html: getHTML ? marked(content) : null,
+                content: getContent ? content : null,
+                filePath: path.join(__dirname, '../posts', fileName)
             }
         });
 

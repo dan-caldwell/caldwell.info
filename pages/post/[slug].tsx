@@ -28,7 +28,7 @@ const getStaticProps = async ({ params: { slug } }) => {
             source,
             meta,
             postList: PostUtils.getPostList(),
-            slug
+            slug,
         }
     }
 }
@@ -39,7 +39,7 @@ const mdxComponents = {
     YouTube
 }
 
-const Post = ({ source, meta: { title }, postList, slug }) => {
+const Post = ({ source, meta: { title, thumbnail }, postList, slug }) => {
     const { currentPost } = useContext(PostContext);
     useEffect(() => {
         currentPost.set(slug);
@@ -50,6 +50,7 @@ const Post = ({ source, meta: { title }, postList, slug }) => {
             <div className="mx-auto w-200 my-8">
                 <div className="p-8 rounded-lg border border-gray-200 bg-white flex flex-col">
                     <h1>{title}</h1>
+                    <img src={thumbnail} />
                     <div className="mb-4 post-content">
                         <MDXRemote {...source} components={mdxComponents} />
                     </div>
