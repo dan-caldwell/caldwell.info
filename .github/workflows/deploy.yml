@@ -15,6 +15,13 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build
+      - name: Create env file
+        run: |
+          touch .env
+          echo AWS_KEY =${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo AWS_SECRET =${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+      - name: Log file
+        run: yarn make-thumbnails
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
