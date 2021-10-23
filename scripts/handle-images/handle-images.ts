@@ -13,6 +13,7 @@ dotenv.config();
 
 export class HandleImages {
 
+    // Get buffer info from image, push image info if the buffer exists
     static pushToImagesToBeUploaded = ({ output, src, slug, filePath, isThumbnail }) => {
         try {
             const buffer = fs.readFileSync(path.join(__dirname, `../../public`, src));
@@ -100,12 +101,14 @@ export class HandleImages {
         }
     }
 
+    // Rename a local file to a server file name
     static newFileName = ({ src, isThumbnail, slug }) => {
         const fileName = src.split('/').pop();
         const extension = fileName.split('.').pop();
         return isThumbnail ? `images/thumbnails/${slug}-thumbnail.jpg` : src.replace(extension, 'jpg');
     }
 
+    // Replace the original image src in the markdown file with the new src
     static replaceImageSrc = ({ mdFilePath, newSrc, oldSrc }) => {
         try {
             // Replace the local MDX file contents
@@ -120,6 +123,7 @@ export class HandleImages {
         }
     }
 
+    // Check if an object exists in S3
     static doesObjectExist = async ({ s3, key }) => {
         try {
             return await s3.getHeadObject({
@@ -131,10 +135,24 @@ export class HandleImages {
         }
     }
 
+    // Put an image in S3
+    static putImage = async ({ key, buffer }) => {
+        try {
+            // Upload the image
+            await s3.putObject({
+                Bucket: process.env.AWS_BUCKET,
+                Key: key,
+                Body: buffer
+            }).promise();
+            console.log('Uploaded image', key);
+        } catch (err) {
+            console.log('Error uploading image \n', key, err);
+        }
+    }
+
 }
 
-
-
+// S3 object
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_KEY,
     secretAccessKey: process.env.AWS_SECRET,
@@ -146,18 +164,11 @@ const init = async () => {
     for (const { src, buffer, isThumbnail, mdFilePath, slug } of imagesToUpload) {
         // Resize images, convert to jpg
         const newImageBuffer = await HandleImages.convertImage({ buffer, src, isThumbnail });
+        // Rename image
         const newKey = HandleImages.newFileName({ src, isThumbnail, slug });
-        try {
-            // Upload the image
-            await s3.putObject({
-                Bucket: process.env.AWS_BUCKET,
-                Key: newKey,
-                Body: newImageBuffer
-            }).promise();
-            console.log('Uploaded image', newKey);
-        } catch (err) {
-            console.log('Error uploading image \n', newKey, err);
-        }
+        // Save image to S3
+        await HandleImages.putImage({ key: newKey, buffer: newImageBuffer });
+        // Replace old srcs in MDX file with new srcs
         HandleImages.replaceImageSrc({ mdFilePath, newSrc: newKey, oldSrc: src });
     }
 }
