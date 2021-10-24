@@ -1,13 +1,18 @@
-import React, { ReactNode } from "react";
-import { PostMeta } from "../../utils/types";
+import React, { ReactNode, useEffect, useState } from "react";
 import Sidebar from "../sidebar/sidebar";
+import PostList from '../../json/post-list.json';
 
 export type PageWithSidebarProps = {
     children: ReactNode,
-    postList: PostMeta[],
 }
 
-const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children, postList }) => {
+const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
+    const [postList, setPostList] = useState([]);
+
+    useEffect(() => {
+        setPostList(JSON.parse(PostList));
+    }, []);
+    
     return (
         <>
             <Sidebar list={postList} />

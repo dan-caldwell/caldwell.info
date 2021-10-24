@@ -1,10 +1,13 @@
 import PostProvider from '../components/context/PostContext';
+import PageWithSidebar from '../components/templates/pageWithSidebar';
 import '../styles/globals.css';
 
 function App({ Component, pageProps }) {
     return (
         <PostProvider>
-            <Component {...pageProps} />
+            <PageWithSidebar>
+                <Component {...pageProps} />
+            </PageWithSidebar>
         </PostProvider>
     )
 }

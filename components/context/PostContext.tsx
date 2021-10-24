@@ -1,8 +1,5 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext } from "react";
 import useContextState from '../../hooks/useContextState';
-import { PostMeta } from "../../utils/types";
-import PageWithSidebar from "../templates/pageWithSidebar";
-import PostList from '../../json/post-list.json';
 
 type ContextState<T> = {
     get: T,
@@ -15,13 +12,8 @@ type ContextProps = {
 
 export const PostContext = createContext<ContextProps>({} as ContextProps);
 
-const PostProvider: React.FC = ({children}) => {
+const PostProvider: React.FC = ({ children }) => {
     const currentPost = useContextState<string | null>(null);
-    const postList = useContextState<PostMeta[]>([]);
-
-    useEffect(() => {
-        postList.set(JSON.parse(PostList));
-    }, []);
 
     return (
         <PostContext.Provider
@@ -29,9 +21,7 @@ const PostProvider: React.FC = ({children}) => {
                 currentPost,
             }}
         >
-            <PageWithSidebar postList={postList.get}>
-                {children}
-            </PageWithSidebar>
+            {children}
         </PostContext.Provider>
     )
 }

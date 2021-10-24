@@ -39,10 +39,12 @@ const mdxComponents = {
 
 const Post = ({ source, meta: { title }, slug }) => {
     const { currentPost } = useContext(PostContext);
+    
     useEffect(() => {
         currentPost.set(slug);
         return () => currentPost.set(null);
     }, [currentPost.get, slug]);
+
     return (
         <ContainerCard className="my-8">
             <h1>{title}</h1>
