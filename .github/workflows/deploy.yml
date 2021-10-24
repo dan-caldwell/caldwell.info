@@ -14,12 +14,12 @@ jobs:
           node-version: 12
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
-      - name: Create env file
-        run: |
-          touch .env
-          echo AWS_KEY =${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
-          echo AWS_SECRET =${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
-          echo AWS_BUCKET =${{ secrets.AWS_BUCKET }} >> .env
+      # - name: Create env file
+      #   run: |
+      #     touch .env
+      #     echo AWS_KEY =${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+      #     echo AWS_SECRET =${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+      #     echo AWS_BUCKET =${{ secrets.AWS_BUCKET }} >> .env
       - run: yarn build
       - uses: aws-actions/configure-aws-credentials@v1
         with:
