@@ -1,34 +1,18 @@
 import Head from 'next/head';
-import PostUtils from '../utils/PostUtils';
-import PostCard from '../components/cards/postCard';
-import PageWithSidebar from '../components/templates/pageWithSidebar';
-import { PostMeta } from '../utils/types';
 
-export const getStaticProps = async () => ({
-    props: {
-        postList: PostUtils.getPostList(),
-    },
-});
-
-export default function IndexPage({ postList }) {
+export default function IndexPage() {
     return (
-        <PageWithSidebar postList={postList}>
+        <>
             <Head>
                 <title>Home page</title>
             </Head>
 
-            <div className="mx-auto flex mt-8 mb-4 w-200 items-center">
-                <img src="static/memoji.png" className="h-36 mr-8" />
-                <h1 className="text-3xl font-bold leading-9 mb-0">
-                    Hello — my name is Dan Caldwell. I’m a software engineer. This is a selection of my personal and professional work.
+            <div className="mx-auto flex flex-col mt-8 mb-4 w-200 items-center">
+                <h1 className="text-3xl font-bold leading-9 mb-8">
+                    Hello — my name is Dan Caldwell. I’m a software engineer. I also like design and user experience. Check out my work on the sidebar.
                 </h1>
+                <img src="https://s3.amazonaws.com/caldwell.info/images/doodle-1.jpg" />
             </div>
-
-            <section>
-                {postList.map((post: PostMeta) => (
-                    <PostCard {...post} key={post.slug} />
-                ))}
-            </section>
-        </PageWithSidebar>
+        </>
     );
 }

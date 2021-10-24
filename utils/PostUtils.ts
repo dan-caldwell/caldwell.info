@@ -5,7 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { MDXSource, PostMeta } from './types';
 import marked from 'marked';
 
-export default class PostsUtils {
+export default class PostUtils {
 
     static getPostList = ({ getHTML = false, getContent = false } = {}): PostMeta[] => {
         // Get files from the posts director

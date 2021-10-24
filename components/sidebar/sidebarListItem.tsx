@@ -8,23 +8,26 @@ export type SidebarListItemProps = {
 }
 
 const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) => {
-    const { title, slug } = post;
+    const { title, slug, thumbnail } = post;
 
     const containerClass = `
         ${currentPost === slug ? 'bg-blue-200' : 'hover:bg-blue-50'}
-        px-4 py-2
+        px-4 py-2 flex
     `;
 
     return (
-        <Link href={`/post/${slug}`}>
-            <a className="hover:no-underline">
-                <div className={containerClass}>
-                    <div>
-                        {title}
+        <div>
+            <Link href={`/post/${slug}`}>
+                <a className="hover:no-underline">
+                    <div className={containerClass}>
+                        <img className="w-16 h-16 mr-2" src={thumbnail} />
+                        <div>
+                            {title}
+                        </div>
                     </div>
-                </div>
-            </a>
-        </Link>
+                </a>
+            </Link>
+        </div>
     )
 }
 
