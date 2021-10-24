@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import PostUtils from '../utils/PostUtils';
-import Post from '../components/postCard';
+import PostCard from '../components/cards/postCard';
 import PageWithSidebar from '../components/templates/pageWithSidebar';
 import { PostMeta } from '../utils/types';
 
@@ -17,11 +17,16 @@ export default function IndexPage({ postList }) {
                 <title>Home page</title>
             </Head>
 
-            <h1 className="mx-auto max-w-xl text-3xl font-bold mt-4 mb-8">List of posts</h1>
+            <div className="mx-auto flex mt-8 mb-4 w-200 items-center">
+                <img src="static/memoji.png" className="h-36 mr-8" />
+                <h1 className="text-3xl font-bold leading-9 mb-0">
+                    Hello — my name is Dan Caldwell. I’m a software engineer. This is a selection of my personal and professional work.
+                </h1>
+            </div>
 
             <section>
                 {postList.map((post: PostMeta) => (
-                    <Post {...post} key={post.slug} />
+                    <PostCard {...post} key={post.slug} />
                 ))}
             </section>
         </PageWithSidebar>

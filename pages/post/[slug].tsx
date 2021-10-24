@@ -5,6 +5,7 @@ import Link from 'next/link';
 import YouTube from 'react-youtube';
 import PostUtils from '../../utils/PostUtils';
 import PageWithSidebar from '../../components/templates/pageWithSidebar';
+import ContainerCard from '../../components/cards/containerCard';
 import { PostContext } from '../../components/context/PostContext';
 import { useContext, useEffect } from 'react';
 
@@ -47,18 +48,15 @@ const Post = ({ source, meta: { title, thumbnail }, postList, slug }) => {
     }, [currentPost, slug]);
     return (
         <PageWithSidebar postList={postList}>
-            <div className="mx-auto w-200 my-8">
-                <div className="p-8 rounded-lg border border-gray-200 bg-white flex flex-col">
-                    <h1>{title}</h1>
-                    <img src={thumbnail} />
-                    <div className="mb-4 post-content">
-                        <MDXRemote {...source} components={mdxComponents} />
-                    </div>
-                    <Link href="/">
-                        <a className="text-sm">Go back to home</a>
-                    </Link>
+            <ContainerCard className="my-8">
+                <h1>{title}</h1>
+                <div className="mb-4 post-content">
+                    <MDXRemote {...source} components={mdxComponents} />
                 </div>
-            </div>
+                <Link href="/">
+                    <a className="text-sm">Go back to home</a>
+                </Link>
+            </ContainerCard>
         </PageWithSidebar>
     );
 }

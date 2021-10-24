@@ -13,7 +13,7 @@ const LogoHeader: React.FC<LogoHeaderProps> = ({ title, href }) => {
             <a className="text-black hover:no-underline">
                 <div className="LogoHeader flex max-w-full items-center p-4">
                     <Logo className="max-w-full w-8 h-8 mr-2" fill="black" />
-                    <div className="text-3xl font-bold">{title}</div>
+                    <div className="text-2xl font-bold">{title}</div>
                 </div>
             </a>
         </Link>

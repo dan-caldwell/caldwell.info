@@ -8,6 +8,7 @@ import path from 'path';
 import { JSDOM } from 'jsdom';
 import { PostMeta } from '../../utils/types';
 import sharp from 'sharp';
+import mime from 'mime-types';
 
 dotenv.config();
 
@@ -67,7 +68,7 @@ export class HandleImages {
                     position: 'center'
                 })
                 .jpeg({
-                    quality: 75
+                    quality: 80
                 })
                 .toBuffer();
         } catch (err) {
@@ -77,12 +78,12 @@ export class HandleImages {
         }
     }
 
-    // Compress an image and conver to JPG
+    // Compress an image
     static compressImage = async ({ buffer, src }) => {
         try {
             return await sharp(buffer)
-                .jpeg({
-                    quality: 75
+                .png({
+                    quality: 80
                 })
                 .toBuffer();
         } catch (err) {
@@ -103,9 +104,9 @@ export class HandleImages {
 
     // Rename a local file to a server file name
     static newFileName = ({ src, isThumbnail, slug }) => {
-        const fileName = src.split('/').pop();
-        const extension = fileName.split('.').pop();
-        return isThumbnail ? `images/thumbnails/${slug}-thumbnail.jpg` : src.replace(extension, 'jpg');
+        //const fileName = src.split('/').pop();
+        //const extension = fileName.split('.').pop();
+        return isThumbnail ? `images/thumbnails/${slug}-thumbnail.jpg` : src;
     }
 
     // Replace the original image src in the markdown file with the new src
@@ -142,7 +143,9 @@ export class HandleImages {
             await s3.putObject({
                 Bucket: process.env.AWS_BUCKET,
                 Key: key,
-                Body: buffer
+                Body: buffer,
+                ContentType: mime.lookup(key), 
+                ACL: 'public-read'
             }).promise();
             console.log('Uploaded image', key);
         } catch (err) {

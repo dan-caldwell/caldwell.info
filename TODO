@@ -1,4 +1,4 @@
 [√] Use a next Link to link in order to prevent page reload
+[√] Convert all images to JPG and compress via sharp
+[√] Thumbnail generation with AWS
 [ ] When ready to switch, add Cloudfront and set up domain name 
-[ ] Thumbnail generation with AWS
-[ ] Convert all images to JPG and compress via sharp
