@@ -1,13 +1,16 @@
+import { useContext, useEffect } from 'react';
 import fs from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote';
 import Link from 'next/link';
 import YouTube from 'react-youtube';
 import PostUtils from '../../utils/PostUtils';
+import { PostContext } from '../../components/context/PostContext';
 import PageWithSidebar from '../../components/templates/pageWithSidebar';
 import ContainerCard from '../../components/cards/containerCard';
-import { PostContext } from '../../components/context/PostContext';
-import { useContext, useEffect } from 'react';
+import Slideshow from '../../components/slideshow/slideshow';
+import Slide from '../../components/slideshow/slide';
+import useSlideshow from '../../hooks/useSlideshow';
 
 const getStaticPaths = async () => {
     const files = fs.readdirSync(path.join('posts'));
@@ -37,22 +40,27 @@ const getStaticProps = async ({ params: { slug } }) => {
 export { getStaticPaths, getStaticProps };
 
 const mdxComponents = {
-    YouTube
+    YouTube,
+    Slide
 }
 
 const Post = ({ source, meta: { title, thumbnail }, postList, slug }) => {
-    const { currentPost } = useContext(PostContext);
+    const { getNumSlides } = useSlideshow();
+    const { currentPost, resetPostContext, postLoaded } = useContext(PostContext);
     useEffect(() => {
-        currentPost.set(slug);
-        return () => currentPost.set(null);
-    }, [currentPost, slug]);
+        postLoaded({
+            newNumSlides: getNumSlides(),
+            newCurrentPost: slug
+        });
+        return () => resetPostContext();
+    }, [currentPost.get, slug]);
     return (
         <PageWithSidebar postList={postList}>
             <ContainerCard className="my-8">
                 <h1>{title}</h1>
-                <div className="mb-4 post-content">
+                <Slideshow>
                     <MDXRemote {...source} components={mdxComponents} />
-                </div>
+                </Slideshow>
                 <Link href="/">
                     <a className="text-sm">Go back to home</a>
                 </Link>
