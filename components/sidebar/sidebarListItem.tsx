@@ -17,7 +17,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
 
     return (
         <div>
-            <Link href={`/post/${slug}`}>
+            <Link href={`/post/${slug}`} prefetch={false}>
                 <a className="hover:no-underline">
                     <div className={containerClass}>
                         <img className="w-16 h-16 mr-2" src={thumbnail} />

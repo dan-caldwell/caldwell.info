@@ -9,7 +9,7 @@ export default class PostUtils {
 
     static getPostList = ({ getHTML = false, getContent = false } = {}): PostMeta[] => {
         // Get files from the posts director
-        const files = fs.readdirSync(path.join('posts'));
+        const files = fs.readdirSync(path.join('posts')).filter(fileName => !fileName.includes('.DS_Store'));
 
         // Get slugs
         const postList = files.map(fileName => {

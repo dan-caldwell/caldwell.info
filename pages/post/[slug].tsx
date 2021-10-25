@@ -7,8 +7,8 @@ import PostUtils from '../../utils/PostUtils';
 import { PostContext } from '../../components/context/PostContext';
 import ContainerCard from '../../components/cards/containerCard';
 
-const getStaticPaths = async () => {
-    const files = fs.readdirSync(path.join('posts'));
+export const getStaticPaths = async () => {
+    const files = fs.readdirSync(path.join('posts')).filter(fileName => !fileName.includes('.DS_Store'));
 
     const paths = files.map(fileName => ({
         params: {
@@ -19,7 +19,7 @@ const getStaticPaths = async () => {
     return { paths, fallback: false }
 }
 
-const getStaticProps = async ({ params: { slug } }) => {
+export const getStaticProps = async ({ params: { slug } }) => {
     const { source, meta } = await PostUtils.getMdxSource({ slug })
 
     return {
@@ -31,15 +31,13 @@ const getStaticProps = async ({ params: { slug } }) => {
     }
 }
 
-export { getStaticPaths, getStaticProps };
-
 const mdxComponents = {
     YouTube
 }
 
 const Post = ({ source, meta: { title }, slug }) => {
     const { currentPost } = useContext(PostContext);
-    
+
     useEffect(() => {
         currentPost.set(slug);
         return () => currentPost.set(null);
