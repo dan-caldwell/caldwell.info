@@ -16,15 +16,35 @@
     }
 
     p {
-        @apply mb-4;
+        @apply mb-4 text-lg;
+    }
+
+    h2 {
+        @apply text-2xl font-bold mb-4;
+    }
+
+    h3 {
+        @apply text-xl font-bold mb-4;
+    }
+
+    h4 {
+        @apply text-xl mb-4 underline;
+    }
+
+    ul {
+        @apply text-lg mb-4;
+    }
+
+    h1:last-child, h2:last-child, h3:last-child, h4:last-child, p:last-child, ul:last-child {
+        margin-bottom: 0;
     }
 
     a {
-        @apply text-blue-600 text-blue-600 hover:underline;
+        @apply text-purple-600 hover:underline;
     }
 
     iframe {
-        @apply max-w-full;
+        @apply w-full;
     }
 }
 
@@ -36,7 +56,6 @@
 
     .w-sidebar {
         @apply w-80;
-        height: 100vh;
     }
 
     .w-144 {

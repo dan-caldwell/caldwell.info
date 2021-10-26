@@ -35,8 +35,8 @@ export default class PostUtils {
         return postList;
     }
 
-    static getMdxSource = async ({ slug }: MDXSource) => {
-        const mdxWithMeta = fs.readFileSync(path.join('posts', slug + '.mdx'), 'utf-8');
+    static getMdxSource = async ({ slug, altPath }: MDXSource) => {
+        const mdxWithMeta = fs.readFileSync(altPath || path.join('posts', slug + '.mdx'), 'utf-8');
         const { content, data: meta } = matter(mdxWithMeta);
         return {
             source: await serialize(content, { scope: meta }),

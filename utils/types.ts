@@ -1,5 +1,6 @@
 export type MDXSource = {
-    slug: string
+    slug: string,
+    altPath?: string
 }
 
 export type PostMeta = {

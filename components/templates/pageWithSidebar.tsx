@@ -14,12 +14,12 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     }, []);
     
     return (
-        <>
+        <div className="flex h-screen">
             <Sidebar list={postList} />
-            <main className="m-sidebar flex flex-col flex-1 min-h-screen">
+            <main className="flex flex-col flex-1 min-h-screen overflow-y-scroll">
                 {children}
             </main>
-        </>
+        </div>
     )
 }
 

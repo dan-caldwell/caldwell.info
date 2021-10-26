@@ -1,11 +1,12 @@
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import fs from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote';
 import YouTube from 'react-youtube';
 import PostUtils from '../../utils/PostUtils';
 import { PostContext } from '../../components/context/PostContext';
-import ContainerCard from '../../components/cards/containerCard';
+import ContentContainer from '../../components/contentContainer';
+import Header from '../../components/text/header';
 
 export const getStaticPaths = async () => {
     const files = fs.readdirSync(path.join('posts')).filter(fileName => !fileName.includes('.DS_Store'));
@@ -44,10 +45,10 @@ const Post = ({ source, meta: { title }, slug }) => {
     }, [currentPost.get, slug]);
 
     return (
-        <ContainerCard className="my-8">
-            <h1>{title}</h1>
+        <ContentContainer className="my-8">
+            <Header title={title} />
             <MDXRemote {...source} components={mdxComponents} />
-        </ContainerCard>
+        </ContentContainer>
     );
 }
 export default Post;
