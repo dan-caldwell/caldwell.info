@@ -1,7 +1,6 @@
 // This CLI will generate thumbnails from post images and automatically upload images from the public/images folder to S3
 // It will then replace the post images with the new S3 URLs
 import PostUtils from '../../utils/PostUtils';
-import dotenv from 'dotenv';
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
@@ -9,8 +8,6 @@ import { JSDOM } from 'jsdom';
 import { PostMeta } from '../../utils/types';
 import sharp from 'sharp';
 import mime from 'mime-types';
-
-dotenv.config();
 
 export class HandleImages {
 
@@ -128,7 +125,7 @@ export class HandleImages {
     static doesObjectExist = async ({ s3, key }) => {
         try {
             return await s3.getHeadObject({
-                Bucket: process.env.AWS_BUCKET,
+                Bucket: process.env.AWS_CALDWELL_BUCKET,
                 Key: key
             });
         } catch (err) {
@@ -141,7 +138,7 @@ export class HandleImages {
         try {
             // Upload the image
             await s3.putObject({
-                Bucket: process.env.AWS_BUCKET,
+                Bucket: process.env.AWS_CALDWELL_BUCKET,
                 Key: key,
                 Body: buffer,
                 ContentType: mime.lookup(key), 
