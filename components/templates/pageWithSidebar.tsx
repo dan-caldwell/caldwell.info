@@ -6,13 +6,9 @@ export type PageWithSidebarProps = {
     children: ReactNode,
 }
 
-const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
-    const [postList, setPostList] = useState([]);
+const postList = JSON.parse(PostList);
 
-    useEffect(() => {
-        setPostList(JSON.parse(PostList));
-    }, []);
-    
+const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     return (
         <div className="flex h-screen">
             <Sidebar list={postList} />

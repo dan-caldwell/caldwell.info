@@ -7,7 +7,7 @@
     "build": "yarn static-post-list && next build && next export",
     "start": "next start",
     "export": "next export",
-    "handle-images": "npx ts-node scripts/handle-images/handle-images.ts",
+    "handle-images": "npx ts-node scripts/handle-images/index.ts",
     "static-post-list": "npx ts-node scripts/static-post-list/static-post-list.ts",
     "test": "jest"
   },
@@ -15,6 +15,7 @@
     "aws-sdk": "^2.1013.0",
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",
+    "got": "^11.8.2",
     "gray-matter": "^4.0.3",
     "jest": "^27.3.1",
     "jsdom": "^18.0.0",

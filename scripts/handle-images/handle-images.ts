@@ -8,19 +8,23 @@ import { JSDOM } from 'jsdom';
 import { PostMeta } from '../../utils/types';
 import sharp from 'sharp';
 import mime from 'mime-types';
+import got from 'got';
 
 export class HandleImages {
 
     // Get buffer info from image, push image info if the buffer exists
-    static pushToImagesToBeUploaded = ({ output, src, slug, filePath, isThumbnail }) => {
+    static pushToImagesToBeUploaded = async ({ output, src, slug, filePath, isThumbnail, alt }) => {
         try {
-            const buffer = fs.readFileSync(path.join(__dirname, `../../public`, src));
+            const isUrl = src.includes('http://') || src.includes('https://');
+            const urlRes = isUrl ? await got(src, { responseType: 'buffer' }) : null;
+            const buffer = isUrl ? urlRes.body : fs.readFileSync(path.join(__dirname, `../../public`, src));
             output.push({
                 src,
                 slug,
                 buffer,
                 mdFilePath: filePath,
-                isThumbnail
+                isThumbnail,
+                alt
             });
         } catch (err) {
             console.log('Image file not found', src);
@@ -29,28 +33,37 @@ export class HandleImages {
     }
 
     // Loop through postList to find non-uploaded images
-    static findNonUploadedImages = ({ postList }: { postList: PostMeta[] }) => {
+    static findNonUploadedImages = async ({ postList }: { postList: PostMeta[] }) => {
         const output = [];
-        postList.forEach(({ html, slug, filePath, thumbnail }) => {
+        for (const { html, slug, filePath, thumbnail } of postList) {
             // Use JSDOM to get all image elements
             const { document } = (new JSDOM(html)).window;
             const images = [...document.querySelectorAll('img')];
-            const srcs = images.map(img => img.src);
-            // Check if we should add the thumbnail
-            if (thumbnail) srcs.push(thumbnail);
-            srcs.forEach(src => {
-                const isThumbnail = src.startsWith('images/thumbnails/');
-                if (src.startsWith('images/')) {
-                    this.pushToImagesToBeUploaded({
+            const srcs = images.map(img => ({ src: img.src, alt: img.getAttribute('alt') }));
+            for (const { src, alt } of srcs) {
+                if (!src.includes('s3.amazonaws.com/caldwell.info')) {
+                    await this.pushToImagesToBeUploaded({
                         output,
                         src,
                         slug,
                         filePath,
-                        isThumbnail
+                        isThumbnail: false,
+                        alt
                     });
                 }
-            });
-        });
+            }
+            // Check if we should add the thumbnail
+            if (thumbnail && !thumbnail.includes('s3.amazonaws.com/caldwell.info')) {
+                await this.pushToImagesToBeUploaded({
+                    output,
+                    src: thumbnail,
+                    slug,
+                    filePath,
+                    isThumbnail: true,
+                    alt: null
+                });
+            }
+        }
         return output;
     }
 
@@ -59,14 +72,15 @@ export class HandleImages {
         try {
             return await sharp(buffer)
                 .resize({
-                    width: 200,
-                    height: 200,
+                    width: 150,
+                    height: 150,
                     fit: sharp.fit.cover,
-                    position: 'center'
+                    position: 'center',
                 })
                 .jpeg({
                     quality: 80
                 })
+                .flatten({ background: { r: 255, g: 255, b: 255 } })
                 .toBuffer();
         } catch (err) {
             console.log('Could not resize thumbnail', src);
@@ -76,13 +90,23 @@ export class HandleImages {
     }
 
     // Compress an image
-    static compressImage = async ({ buffer, src }) => {
+    static compressImage = async ({ buffer, src, extension }) => {
         try {
-            return await sharp(buffer)
-                .png({
-                    quality: 80
-                })
-                .toBuffer();
+            const sharpObj = sharp(buffer);
+            const args = { quality: 80 };
+            switch (extension) {
+                case "gif":
+                    return await sharpObj.gif(args).toBuffer();
+                case "jpg":
+                case "jpeg":
+                    return await sharpObj.jpeg(args).toBuffer();
+                case "png":
+                    return await sharpObj.png(args).toBuffer();
+                case "tiff":
+                    return await sharpObj.tiff(args).toBuffer();
+                default:
+                    return await sharpObj.jpeg(args).toBuffer();
+            }
         } catch (err) {
             console.log('Could not compress image', src);
             console.log(err);
@@ -91,19 +115,20 @@ export class HandleImages {
     }
 
     // General conversion of image
-    static convertImage = async ({ buffer, isThumbnail, src }) => {
+    static convertImage = async ({ buffer, isThumbnail, src, extension = null }) => {
         if (isThumbnail) {
             return await this.createThumbnail({ buffer, src });
         } else {
-            return await this.compressImage({ buffer, src });
+            return await this.compressImage({ buffer, src, extension });
         }
     }
 
     // Rename a local file to a server file name
-    static newFileName = ({ src, isThumbnail, slug }) => {
-        //const fileName = src.split('/').pop();
-        //const extension = fileName.split('.').pop();
-        return isThumbnail ? `images/thumbnails/${slug}-thumbnail.jpg` : src;
+    static newFileName = ({ isThumbnail, extension = null, slug, alt = null, index = 0 }) => {
+        const slugAlt = alt ? alt.replace(/ /g, '-').toLowerCase() : `image-${index + 1}`;
+        const thumbnailName = `images/${slug}/thumbnail.jpg`;
+        const standardName = `images/${slug}/${slugAlt}.${extension}`;
+        return isThumbnail ? thumbnailName : standardName;
     }
 
     // Replace the original image src in the markdown file with the new src
@@ -141,7 +166,7 @@ export class HandleImages {
                 Bucket: process.env.AWS_CALDWELL_BUCKET,
                 Key: key,
                 Body: buffer,
-                ContentType: mime.lookup(key), 
+                ContentType: mime.lookup(key),
                 ACL: 'public-read'
             }).promise();
             console.log('Uploaded image', key);
@@ -158,18 +183,21 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET,
 });
 
-const init = async () => {
+const handleImages = async () => {
     const postList = PostUtils.getPostList({ getHTML: true });
-    const imagesToUpload = HandleImages.findNonUploadedImages({ postList });
-    for (const { src, buffer, isThumbnail, mdFilePath, slug } of imagesToUpload) {
-        // Resize images, convert to jpg
-        const newImageBuffer = await HandleImages.convertImage({ buffer, src, isThumbnail });
+    const imagesToUpload = await HandleImages.findNonUploadedImages({ postList });
+    for (const [index, { src, buffer, isThumbnail, mdFilePath, slug, alt }] of imagesToUpload.entries()) {
+        const fileName = src.split('/').pop();
+        const extension = fileName.split('.').pop();
+        // Resize images, convert to png
+        const newImageBuffer = await HandleImages.convertImage({ buffer, src, isThumbnail, extension });
         // Rename image
-        const newKey = HandleImages.newFileName({ src, isThumbnail, slug });
+        const newKey = HandleImages.newFileName({ isThumbnail, slug, extension, alt, index });
         // Save image to S3
         await HandleImages.putImage({ key: newKey, buffer: newImageBuffer });
         // Replace old srcs in MDX file with new srcs
         HandleImages.replaceImageSrc({ mdFilePath, newSrc: newKey, oldSrc: src });
     }
 }
-init();
+
+export default handleImages;

@@ -13,17 +13,30 @@ test("convertImage", async () => {
 test("newFileName", () => {
 
     const newThumbnailName = HandleImages.newFileName({ 
-        src: 'images/thumbnails/ultracss-logo-img-2.png', 
+        alt: null,
         isThumbnail: true, 
-        slug: 'ultracss'
+        slug: 'ultracss',
+        extension: 'png'
     });
-    expect(newThumbnailName).toEqual(`images/thumbnails/ultracss-thumbnail.jpg`);
+
+    expect(newThumbnailName).toEqual(`images/ultracss/thumbnail.jpg`);
 
     const newImageName = HandleImages.newFileName({ 
-        src: 'images/ultracss-home.png',
+        alt: null,
+        index: 3,
         isThumbnail: false,
-        slug: 'ultracss'
+        slug: 'ultracss',
+        extension: 'png'
     });
 
-    expect(newImageName).toEqual('images/ultracss-home.jpg');
+    expect(newImageName).toEqual('images/ultracss/image-4.png');
+
+    const newUrlImageName = HandleImages.newFileName({
+        alt: 'RNS Desktop Home Page',
+        isThumbnail: false,
+        slug: 'religion-news-service-website-redesign',
+        extension: 'gif'
+    });
+
+    expect(newUrlImageName).toEqual('images/religion-news-service-website-redesign/rns-desktop-home-page.gif');
 });
