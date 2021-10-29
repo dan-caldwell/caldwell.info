@@ -90,36 +90,26 @@ export class HandleImages {
     }
 
     // Compress an image
-    static compressImage = async ({ buffer, src, extension }) => {
+    static compressImage = async ({ buffer, src }) => {
         try {
             const sharpObj = sharp(buffer);
-            const args = { quality: 80 };
-            switch (extension) {
-                case "gif":
-                    return await sharpObj.gif(args).toBuffer();
-                case "jpg":
-                case "jpeg":
-                    return await sharpObj.jpeg(args).toBuffer();
-                case "png":
-                    return await sharpObj.png(args).toBuffer();
-                case "tiff":
-                    return await sharpObj.tiff(args).toBuffer();
-                default:
-                    return await sharpObj.jpeg(args).toBuffer();
-            }
+            const meta = await sharpObj.metadata();
+            return await sharpObj.toFormat(meta.format, {
+                quality: 80
+            }).toBuffer();
         } catch (err) {
             console.log('Could not compress image', src);
             console.log(err);
-            return buffer;
+            process.exit(1);
         }
     }
 
     // General conversion of image
-    static convertImage = async ({ buffer, isThumbnail, src, extension = null }) => {
+    static convertImage = async ({ buffer, isThumbnail, src }) => {
         if (isThumbnail) {
             return await this.createThumbnail({ buffer, src });
         } else {
-            return await this.compressImage({ buffer, src, extension });
+            return await this.compressImage({ buffer, src });
         }
     }
 
@@ -190,7 +180,7 @@ const handleImages = async () => {
         const fileName = src.split('/').pop();
         const extension = fileName.split('.').pop();
         // Resize images, convert to png
-        const newImageBuffer = await HandleImages.convertImage({ buffer, src, isThumbnail, extension });
+        const newImageBuffer = await HandleImages.convertImage({ buffer, src, isThumbnail });
         // Rename image
         const newKey = HandleImages.newFileName({ isThumbnail, slug, extension, alt, index });
         // Save image to S3

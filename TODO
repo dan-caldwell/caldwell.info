@@ -2,4 +2,5 @@
 [√] Convert all images to JPG and compress via sharp
 [√] Thumbnail generation with AWS
 [ ] When ready to switch, add Cloudfront and set up domain name
-[ ] Support for auto uploading images from URL to S3
+[√] Support for auto uploading images from URL to S3
+[ ] Image compression script
