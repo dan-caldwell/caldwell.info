@@ -3,6 +3,8 @@
 [√] Thumbnail generation with AWS
 [√] Image compression script
 [√] Support for auto uploading images from URL to S3
-[ ] Import posts
-[ ] Remove get/set context state
+[√] Remove get/set context state
+[ ] Preview src and full src for Image element
+    [ ] Preview src height/width prop to make loading images take up space
+[ ] Import post content
 [ ] When ready to switch, add Cloudfront and set up domain name

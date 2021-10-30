@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ list }) => {
                     </Link>
                 </div>
                 <div className="overflow-y-scroll flex flex-col flex-grow">
-                    {list.map(post => <SidebarListItem currentPost={currentPost.get} key={post.slug} post={post} />)}
+                    {list.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
                 </div>
             </div>
             <Footer />

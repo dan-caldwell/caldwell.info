@@ -39,12 +39,12 @@ export const getStaticProps = async ({ params: { slug } }) => {
 }
 
 const Post = ({ source, meta: { title }, slug }) => {
-    const { currentPost } = useContext(PostContext);
-
+    const { setCurrentPost } = useContext(PostContext);
+    
     useEffect(() => {
-        currentPost.set(slug);
-        return () => currentPost.set(null);
-    }, [currentPost.get, slug]);
+        setCurrentPost(slug);
+        return () => setCurrentPost(null);
+    }, [setCurrentPost, slug]);
 
     return (
         <ContentContainer className="my-8">

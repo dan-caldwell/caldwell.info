@@ -1,24 +1,20 @@
-import React, { createContext } from "react";
-import useContextState from '../../hooks/useContextState';
-
-type ContextState<T> = {
-    get: T,
-    set: React.Dispatch<React.SetStateAction<T>>
-}
+import React, { createContext, useState } from "react";
 
 type ContextProps = {
-    currentPost: ContextState<string | null>,
+    currentPost: string | null,
+    setCurrentPost: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 export const PostContext = createContext<ContextProps>({} as ContextProps);
 
 const PostProvider: React.FC = ({ children }) => {
-    const currentPost = useContextState<string | null>(null);
+    const [currentPost, setCurrentPost] = useState<string | null>(null);
 
     return (
         <PostContext.Provider
             value={{
                 currentPost,
+                setCurrentPost
             }}
         >
             {children}
