@@ -7,6 +7,12 @@ import PostUtils from '../../utils/PostUtils';
 import { PostContext } from '../../components/context/PostContext';
 import ContentContainer from '../../components/contentContainer';
 import Header from '../../components/text/header';
+import Image from '../../components/basic/Image';
+
+const mdxComponents = {
+    YouTube,
+    Image
+}
 
 export const getStaticPaths = async () => {
     const files = fs.readdirSync(path.join('posts')).filter(fileName => !fileName.includes('.DS_Store'));
@@ -21,7 +27,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params: { slug } }) => {
-    const { source, meta } = await PostUtils.getMdxSource({ slug })
+    const { source, meta } = await PostUtils.getMdxSource({ slug });
 
     return {
         props: {
@@ -30,10 +36,6 @@ export const getStaticProps = async ({ params: { slug } }) => {
             slug,
         }
     }
-}
-
-const mdxComponents = {
-    YouTube
 }
 
 const Post = ({ source, meta: { title }, slug }) => {

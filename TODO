@@ -1,6 +1,8 @@
 [√] Use a next Link to link in order to prevent page reload
 [√] Convert all images to JPG and compress via sharp
 [√] Thumbnail generation with AWS
-[ ] When ready to switch, add Cloudfront and set up domain name
+[√] Image compression script
 [√] Support for auto uploading images from URL to S3
-[ ] Image compression script
+[ ] Import posts
+[ ] Remove get/set context state
+[ ] When ready to switch, add Cloudfront and set up domain name

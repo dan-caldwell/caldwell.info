@@ -39,6 +39,17 @@ export class HandleImages {
             // Use JSDOM to get all image elements
             const { document } = (new JSDOM(html)).window;
             const images = [...document.querySelectorAll('img')];
+            // Check if we should add the thumbnail
+            if (thumbnail && !thumbnail.includes('s3.amazonaws.com/caldwell.info')) {
+                await this.pushToImagesToBeUploaded({
+                    output,
+                    src: thumbnail,
+                    slug,
+                    filePath,
+                    isThumbnail: true,
+                    alt: null
+                });
+            }
             const srcs = images.map(img => ({ src: img.src, alt: img.getAttribute('alt') }));
             for (const { src, alt } of srcs) {
                 if (!src.includes('s3.amazonaws.com/caldwell.info')) {
@@ -51,17 +62,6 @@ export class HandleImages {
                         alt
                     });
                 }
-            }
-            // Check if we should add the thumbnail
-            if (thumbnail && !thumbnail.includes('s3.amazonaws.com/caldwell.info')) {
-                await this.pushToImagesToBeUploaded({
-                    output,
-                    src: thumbnail,
-                    slug,
-                    filePath,
-                    isThumbnail: true,
-                    alt: null
-                });
             }
         }
         return output;

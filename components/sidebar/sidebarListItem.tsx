@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import NextImage from 'next/image';
 import { PostMeta } from "../../utils/types";
 
 export type SidebarListItemProps = {
@@ -20,7 +21,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
             <Link href={`/post/${slug}`} prefetch={false}>
                 <a className="hover:no-underline w-full">
                     <div className={containerClass}>
-                        <img className="w-16 h-16 mr-2" src={thumbnail} />
+                        <NextImage src={thumbnail} className="w-16 h-16 mr-2" />
                         <div>
                             {title}
                         </div>
