@@ -1,5 +1,3 @@
-import NextImage from 'next/image';
-
 type ImageProps = {
     src: string,
     alt: string,
@@ -9,7 +7,7 @@ type ImageProps = {
 const Image: React.FC<ImageProps> = ({ src, caption, alt }) => {
     return (
         <div>
-            <NextImage src={src} loading="lazy" alt={alt} className={!caption ? `mb-4` : ''} />
+            <img src={src} loading="lazy" alt={alt} className={!caption ? `mb-4` : ''} />
             {caption && 
                 <div className="mb-4 italic">{caption}</div>
             }
