@@ -4,7 +4,8 @@
 [√] Image compression script
 [√] Support for auto uploading images from URL to S3
 [√] Remove get/set context state
-[ ] Preview src and full src for Image element
-    [ ] Preview src height/width prop to make loading images take up space
+[√] Preview src and full src for Image element
+    [√] Preview src height/width prop to make loading images take up space
+[√] Click to enlarge image
 [ ] Import post content
 [ ] When ready to switch, add Cloudfront and set up domain name
