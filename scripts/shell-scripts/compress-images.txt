@@ -1,1 +1,2 @@
-yarn compress-image https://s3.amazonaws.com/caldwell.info/images/art-and-illustration/spring-forest.jpg --scale 0.8 --quality 90
+yarn compress-image https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-mobile-home-page.jpg --scale 0.5 --quality 90
+

@@ -9,6 +9,7 @@
     "export": "next export",
     "handle-images": "npx ts-node scripts/handle-images/index.ts",
     "compress-image": "npx ts-node scripts/compress-image/index.ts",
+    "sh-compress-image": "sh scripts/shell-scripts/compress-images.txt",
     "static-post-list": "npx ts-node scripts/static-post-list/static-post-list.ts",
     "test": "jest"
   },

@@ -8,4 +8,5 @@
     [√] Preview src height/width prop to make loading images take up space
 [√] Click to enlarge image
 [ ] Import post content
+[ ] Sort posts by date
 [ ] When ready to switch, add Cloudfront and set up domain name

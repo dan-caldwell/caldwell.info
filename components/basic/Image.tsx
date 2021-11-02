@@ -9,16 +9,20 @@ type ImageProps = {
     fullWidth?: boolean,
     width?: number,
     height?: number,
-    clickEnlarge?: boolean
+    clickEnlarge?: boolean,
+    float?: 'left' | 'right',
+    className?: string
 }
 
-const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, clickEnlarge = false }) => {
+const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, float, className = '', clickEnlarge = false }) => {
     const [loadedSrc, setLoadedSrc] = useState<boolean>(false);
     const [imageRatio, setImageRatio] = useState<number>(0);
     const [enlarged, setEnlarged] = useState<boolean>(false);
     const imageRef = useRef(null);
 
-    const className = [
+    if (float) fullWidth = false;
+
+    const imgClassName = [
         !caption ? `mb-4` : '',
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
@@ -34,20 +38,25 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
     useEffect(() => {
         const { width: boxWidth } = imageRef.current.getBoundingClientRect();
         setImageRatio(boxWidth / width);
-    }, [imageRef.current, setImageRatio]);
+    }, [width, setImageRatio]);
 
     return (
-        <div>
+        <>
             <img
                 src={previewSrc || src}
                 onLoad={() => setLoadedSrc(true)}
                 loading="lazy"
                 alt={alt}
-                className={className}
+                className={imgClassName + ' ' + className}
                 ref={imageRef}
                 style={{
-                    width: width && imageRatio && !loadedSrc ? imageRatio * width + 'px' : null,
-                    height: height && imageRatio && !loadedSrc ? imageRatio * height + 'px' : null
+                    width: width && imageRatio && !loadedSrc ? 
+                        imageRatio * width + 'px' : 
+                        (fullWidth && width ? 800 + 'px' : null),
+                    height: height && imageRatio && !loadedSrc ? 
+                        imageRatio * height + 'px' : 
+                        (fullWidth && height ? (800 / width) * height + "px" : null),
+                    float
                 }}
                 onClick={clickEnlarge ? () => setEnlarged(!enlarged) : null}
             />
@@ -70,7 +79,7 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
             {caption &&
                 <div className={captionClassName}>{caption}</div>
             }
-        </div>
+        </>
     )
 }
 
