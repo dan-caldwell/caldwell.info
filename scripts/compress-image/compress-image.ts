@@ -42,13 +42,26 @@ const putImage = async ({ key, buffer }) => {
     }
 }
 
-const compress = async ({ buffer, quality, scale }) => {
+const compress = async ({ buffer, quality, scale, width, height }) => {
     try {
         const meta = await sharp(buffer).metadata();
+
+        let newWidth = Math.round(scale * meta.width);
+        let newHeight = Math.round(scale * meta.height);
+
+        if (width && !height) {
+            newWidth = width;
+            newHeight = Math.round((width / meta.width) * meta.height);
+        }
+        if (height && !width) {
+            newWidth = Math.round((height / meta.height) * meta.width);
+            newHeight = height;
+        }
+        
         const newBuffer =
             await sharp(buffer)
                 .toFormat(meta.format, { quality })
-                .resize(Math.round(scale * meta.width), Math.round(scale * meta.height))
+                .resize(newWidth, newHeight)
                 .toBuffer();
         const newMeta = await sharp(newBuffer).metadata();
         console.log(`Resized image from [${meta.width}x${meta.height}] to [${newMeta.width}x${newMeta.height}]`)
@@ -87,6 +100,8 @@ const init = async () => {
         const { buffer: newBuffer, meta } = await compress({
             buffer,
             scale: argv.scale || 1,
+            width: argv.width || null,
+            height: argv.height || null,
             quality: argv.quality || 100
         });
         const newKey = createNewKey({ key, argv, meta });

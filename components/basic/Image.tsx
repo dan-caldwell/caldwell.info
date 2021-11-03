@@ -14,7 +14,7 @@ type ImageProps = {
     className?: string
 }
 
-const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, float, className = '', clickEnlarge = false }) => {
+const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, float, className = '', clickEnlarge = true }) => {
     const [loadedSrc, setLoadedSrc] = useState<boolean>(false);
     const [imageRatio, setImageRatio] = useState<number>(0);
     const [enlarged, setEnlarged] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
 
     const captionClassName = [
         loadedSrc ? 'visible' : 'invisible',
-        'mb-4 italic'
+        'mb-4 italic mt-2'
     ].join(' ');
 
     useEffect(() => {

@@ -1,2 +1,4 @@
-yarn compress-image https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-mobile-home-page.jpg --scale 0.5 --quality 90
+yarn compress-image https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-home-page-categories.jpg --width 800 --quality 90 &&
+yarn compress-image https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-post-page.jpg --width 800 --quality 90 &&
+yarn compress-image https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-category-page.jpg --width 800 --quality 90
 
