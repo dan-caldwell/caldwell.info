@@ -43,7 +43,6 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
     useEffect(() => {
         if (imageRef.current && imageRef.current.complete && !loadedSrc) {
             setLoadedSrc(true)
-            console.log('running use effect to setLoadedSrc');
         }
     });
 

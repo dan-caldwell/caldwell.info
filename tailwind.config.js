@@ -15,4 +15,9 @@ module.exports = {
     },
   },
   plugins: [],
+  purge: {
+    safelist: [
+      'ml-4', 'max-w-2xs'
+    ]
+  }
 }
