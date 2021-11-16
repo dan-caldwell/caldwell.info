@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: [],
   purge: {
+    content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'], 
     safelist: [
       'ml-4', 'max-w-2xs'
     ]
