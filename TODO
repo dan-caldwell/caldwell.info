@@ -7,6 +7,8 @@
 [√] Preview src and full src for Image element
     [√] Preview src height/width prop to make loading images take up space
 [√] Click to enlarge image
+[√] Sort posts by date
+[√] Open link in new tab with pictures -> image opacity doesn't go to 1
+[ ] Compress RNS big image srcs
 [ ] Import post content
-[ ] Sort posts by date
 [ ] When ready to switch, add Cloudfront and set up domain name

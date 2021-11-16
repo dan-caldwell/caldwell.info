@@ -40,6 +40,13 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
         setImageRatio(boxWidth / width);
     }, [width, setImageRatio]);
 
+    useEffect(() => {
+        if (imageRef.current && imageRef.current.complete && !loadedSrc) {
+            setLoadedSrc(true)
+            console.log('running use effect to setLoadedSrc');
+        }
+    });
+
     return (
         <>
             <img

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import Sidebar from "../sidebar/sidebar";
 import PostList from '../../json/post-list.json';
 import { PostMeta } from "../../utils/types";
@@ -15,10 +15,16 @@ postList.sort((a: PostMeta, b: PostMeta) => {
 });
 
 const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
+    const mainRef = useRef(null);
+
+    useEffect(() => {
+        mainRef.current.scrollTo(0, 0);
+    });
+
     return (
         <div className="flex h-screen">
             <Sidebar list={postList} />
-            <main className="flex flex-col flex-1 min-h-screen overflow-y-scroll">
+            <main ref={mainRef} className="flex flex-col flex-1 min-h-screen overflow-y-scroll">
                 {children}
             </main>
         </div>

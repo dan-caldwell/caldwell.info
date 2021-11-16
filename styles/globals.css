@@ -12,7 +12,11 @@
     }
 
     ul {
-        @apply list-inside list-disc;
+        @apply list-inside list-disc text-lg mb-4;
+    }
+
+    ol {
+        @apply list-decimal list-inside text-lg mb-4;
     }
 
     p {
@@ -31,10 +35,6 @@
         @apply text-xl mb-4 underline;
     }
 
-    ul {
-        @apply text-lg mb-4;
-    }
-
     h1:last-child, h2:last-child, h3:last-child, h4:last-child, p:last-child, ul:last-child {
         margin-bottom: 0;
     }
@@ -44,7 +44,8 @@
     }
 
     iframe {
-        @apply w-full;
+        @apply w-full mb-4;
+        height: 28.125rem;
     }
 }
 
