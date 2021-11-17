@@ -56,13 +56,11 @@
     }
 
     .w-sidebar {
-        @apply w-80;
     }
 
     .w-144 {
         width: 36rem;
     }
-
     
     .w-160 {
         width: 40rem;
@@ -96,4 +94,10 @@
         max-width: 4rem;
     }
     
+}
+
+@screen xl {
+    .w-sidebar {
+        @apply w-80;
+    }
 }

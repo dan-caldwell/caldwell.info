@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import Sidebar from "../sidebar/sidebar";
 import PostList from '../../json/post-list.json';
 import { PostMeta } from "../../utils/types";
@@ -15,6 +15,7 @@ postList.sort((a: PostMeta, b: PostMeta) => {
 });
 
 const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
+    const [menuOpen, setMenuOpen] = useState(false);
     const mainRef = useRef(null);
 
     useEffect(() => {
@@ -22,9 +23,9 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     });
 
     return (
-        <div className="flex h-screen">
-            <Sidebar list={postList} />
-            <main ref={mainRef} className="flex flex-col flex-1 min-h-screen overflow-y-scroll">
+        <div className="flex flex-col xl:flex-row h-screen">
+            <Sidebar list={postList} onClickHamburger={setMenuOpen} />
+            <main ref={mainRef} className={`flex-col flex-1 min-h-screen overflow-y-scroll ${menuOpen ? 'hidden xl:flex' : 'flex'}`}>
                 {children}
             </main>
         </div>
