@@ -12,3 +12,4 @@
 [ ] Compress RNS big image srcs
 [ ] Import post content
 [ ] When ready to switch, add Cloudfront and set up domain name
+[ ] Remove Image width/height on mobile

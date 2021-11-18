@@ -55,8 +55,7 @@
         max-width: calc(100vw - 20rem);
     }
 
-    .w-sidebar {
-    }
+    .w-sidebar {}
 
     .w-144 {
         width: 36rem;
@@ -67,7 +66,7 @@
     }
 
     .w-200 {
-        width: 50rem;
+        width: 100%;
     }
     
     .w-240 {
@@ -99,5 +98,8 @@
 @screen xl {
     .w-sidebar {
         @apply w-80;
+    }
+    .w-200 {
+        width: 50rem;
     }
 }

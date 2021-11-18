@@ -56,11 +56,11 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
                 className={imgClassName + ' ' + className}
                 ref={imageRef}
                 style={{
-                    width: width && imageRatio && !loadedSrc ? 
-                        imageRatio * width + 'px' : 
+                    width: width && imageRatio && !loadedSrc ?
+                        imageRatio * width + 'px' :
                         (fullWidth && width ? 800 + 'px' : null),
-                    height: height && imageRatio && !loadedSrc ? 
-                        imageRatio * height + 'px' : 
+                    height: height && imageRatio && !loadedSrc ?
+                        imageRatio * height + 'px' :
                         (fullWidth && height ? (800 / width) * height + "px" : null),
                     float
                 }}
@@ -68,8 +68,11 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
             />
             {enlarged &&
                 <>
-                    <XButton 
-                        className='fixed z-10 top-0 right-0 text-white w-8 h-8 mt-2 mr-2 cursor-pointer shadow-md rounded-full' 
+                    <XButton
+                        className='fixed z-10 top-0 right-0 text-white w-8 h-8 mt-2 mr-2 cursor-pointer shadow-md rounded-full'
+                        style={{
+                            backgroundColor: 'rgba(0, 0, 0, 0.25)'
+                        }}
                         onClick={() => setEnlarged(false)}
                     />
                     <div

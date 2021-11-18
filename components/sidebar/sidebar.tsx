@@ -8,20 +8,17 @@ import Footer from "./footer";
 
 export type SidebarProps = {
     list: PostMeta[],
-    onClickHamburger?: (menuOpen: boolean) => void
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ list, onClickHamburger }) => {
-    const [menuOpen, setMenuOpen] = useState(false);
-    const { currentPost } = useContext(PostContext);
+const Sidebar: React.FC<SidebarProps> = ({ list }) => {
+    const { currentPost, menuOpen, setMenuOpen } = useContext(PostContext);
 
     const handleClickHamburger = () => {
         setMenuOpen(!menuOpen);
-        onClickHamburger(!menuOpen);
     }
 
     return (
-        <div className="w-sidebar bg-white h-full border-r border-gray-200 flex-col justify-between flex">
+        <div className={`w-sidebar bg-white border-r border-gray-200 flex-col justify-between flex xl:h-full ${menuOpen ? 'h-full' : ''}`}>
             <div className="flex-col flex-grow overflow-hidden flex">
                 <LogoHeader title="Dan Caldwell" href="/" onClickHamburger={handleClickHamburger} hamburgerVisible={!menuOpen} />
                 <div className={`flex-col overflow-hidden xl:flex ${menuOpen ? "flex" : "hidden"}`}>

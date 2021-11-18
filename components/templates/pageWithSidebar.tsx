@@ -1,7 +1,8 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "../sidebar/sidebar";
 import PostList from '../../json/post-list.json';
 import { PostMeta } from "../../utils/types";
+import { PostContext } from "../context/PostContext";
 
 export type PageWithSidebarProps = {
     children: ReactNode,
@@ -15,17 +16,20 @@ postList.sort((a: PostMeta, b: PostMeta) => {
 });
 
 const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
-    const [menuOpen, setMenuOpen] = useState(false);
+    const { menuOpen, currentPost } = useContext(PostContext);
     const mainRef = useRef(null);
 
     useEffect(() => {
-        mainRef.current.scrollTo(0, 0);
-    });
+        // Scroll to the top of the main element
+        setTimeout(() => {
+            mainRef.current.scrollTo(0, 0);
+        }, 50);
+    }, [currentPost]);
 
     return (
-        <div className="flex flex-col xl:flex-row h-screen">
-            <Sidebar list={postList} onClickHamburger={setMenuOpen} />
-            <main ref={mainRef} className={`flex-col flex-1 min-h-screen overflow-y-scroll ${menuOpen ? 'hidden xl:flex' : 'flex'}`}>
+        <div className="flex flex-col xl:flex-row h-screen overflow-hidden">
+            <Sidebar list={postList} />
+            <main ref={mainRef} className={`flex-col flex-grow xl:min-h-full overflow-y-scroll xl:px-0 px-8 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}>
                 {children}
             </main>
         </div>
