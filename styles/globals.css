@@ -45,7 +45,6 @@
 
     iframe {
         @apply w-full mb-4;
-        height: 28.125rem;
     }
 }
 
@@ -67,6 +66,7 @@
 
     .w-200 {
         width: 100%;
+        max-width: 50rem;
     }
     
     .w-240 {
@@ -92,7 +92,6 @@
     .max-w-5xs {
         max-width: 4rem;
     }
-    
 }
 
 @screen xl {
@@ -101,5 +100,8 @@
     }
     .w-200 {
         width: 50rem;
+    }
+    iframe {
+        height: 28.125rem;
     }
 }

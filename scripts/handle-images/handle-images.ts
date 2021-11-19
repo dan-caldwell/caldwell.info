@@ -94,6 +94,8 @@ export class HandleImages {
         try {
             const sharpObj = sharp(buffer);
             const meta = await sharpObj.metadata();
+            // Do not compress gifs
+            if (meta.format === "gif") return buffer;
             return await sharpObj.toFormat(meta.format, {
                 quality: 80
             }).toBuffer();

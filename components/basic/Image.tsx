@@ -11,10 +11,11 @@ type ImageProps = {
     height?: number,
     clickEnlarge?: boolean,
     float?: 'left' | 'right',
-    className?: string
+    className?: string,
+    center?: boolean
 }
 
-const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, float, className = '', clickEnlarge = true }) => {
+const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, float, center = true, className = '', clickEnlarge = true }) => {
     const [loadedSrc, setLoadedSrc] = useState<boolean>(false);
     const [imageRatio, setImageRatio] = useState<number>(0);
     const [enlarged, setEnlarged] = useState<boolean>(false);
@@ -24,6 +25,7 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
 
     const imgClassName = [
         !caption ? `mb-4` : '',
+        center ? 'mx-auto' : '',
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
         clickEnlarge ? 'cursor-zoom-in' : '',
@@ -32,7 +34,8 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
 
     const captionClassName = [
         loadedSrc ? 'visible' : 'invisible',
-        'mb-4 italic mt-2'
+        center ? 'text-center' : '',
+        'mb-4 italic mt-2 text-gray-600'
     ].join(' ');
 
     useEffect(() => {
@@ -58,10 +61,10 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
                 style={{
                     width: width && imageRatio && !loadedSrc ?
                         imageRatio * width + 'px' :
-                        (fullWidth && width ? 800 + 'px' : null),
+                        null,
                     height: height && imageRatio && !loadedSrc ?
                         imageRatio * height + 'px' :
-                        (fullWidth && height ? (800 / width) * height + "px" : null),
+                        null,
                     float
                 }}
                 onClick={clickEnlarge ? () => setEnlarged(!enlarged) : null}

@@ -16,14 +16,14 @@ const LogoHeader: React.FC<LogoHeaderProps> = ({ title, href, onClickHamburger, 
         <div className="flex max-w-full items-center border-b border-gray-200 xl:hover:bg-purple-50 cursor-pointer justify-between">
             <Link href={href}>
                 <a className="text-black p-4 hover:no-underline flex items-center xl:w-full justify-start">
-                    <Logo className="max-w-full w-8 h-8 mr-2" fill="black" />
+                    <Logo className="max-w-full w-8 h-8 mr-3" fill="black" />
                     <div className="text-2xl font-bold w-full">{title}</div>
                 </a>
             </Link>
             <div className="xl:hidden" onClick={onClickHamburger}>
                 {hamburgerVisible ? 
-                    <Hamburger className="w-6 h-6 mr-2 cursor-pointer" /> : 
-                    <XButton className="w-6 h-6 mr-2 cursor-pointer" />
+                    <Hamburger className="w-6 h-6 mr-4 cursor-pointer" /> : 
+                    <XButton className="w-6 h-6 mr-4 cursor-pointer" />
                 }
             </div>
         </div>
