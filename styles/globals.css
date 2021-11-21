@@ -43,6 +43,10 @@
         @apply text-purple-600 hover:underline;
     }
 
+    li a {
+        @apply break-all;
+    }
+
     iframe {
         @apply w-full mb-4;
     }

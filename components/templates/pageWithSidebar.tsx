@@ -23,13 +23,17 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
         // Scroll to the top of the main element
         setTimeout(() => {
             mainRef.current.scrollTo(0, 0);
+            window.scrollTo(0, 0);
         }, 50);
     }, [currentPost]);
 
     return (
-        <div className="flex flex-col xl:flex-row h-screen overflow-hidden">
+        <div className="flex flex-col xl:flex-row h-screen xl:overflow-hidden">
             <Sidebar list={postList} />
-            <main ref={mainRef} className={`flex-col flex-grow xl:min-h-full overflow-y-scroll xl:px-0 px-8 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}>
+            <main ref={mainRef} className={`
+                flex-col flex-grow px-8 mt-16
+                xl:overflow-y-scroll xl:min-h-full xl:px-0 xl:mt-0 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}
+            >
                 {children}
             </main>
         </div>

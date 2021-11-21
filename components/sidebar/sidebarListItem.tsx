@@ -11,14 +11,14 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
     const { title, slug, thumbnail } = post;
 
     const containerClass = `
-        ${currentPost === slug ? 'bg-purple-100' : 'hover:bg-purple-50'}
+        ${currentPost === slug ? 'bg-purple-100' : 'xl:hover:bg-purple-50'}
         flex p-4 w-full
     `;
 
     return (
         <div className="flex">
-            <Link href={`/post/${slug}`} prefetch={false}>
-                <a className="hover:no-underline w-full">
+            <Link href={`/post/${slug}`} prefetch={false} scroll={currentPost !== slug}>
+                <a className="hover:no-underline w-full break-normal">
                     <div className={containerClass}>
                         <img src={thumbnail} className="w-16 h-16 mr-2" alt={`${title} thumbnail`} />
                         <div>

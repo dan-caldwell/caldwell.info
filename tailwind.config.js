@@ -7,6 +7,9 @@ module.exports = {
       'zoom-in': 'zoom-in',
       'zoom-out': 'zoom-out',
       pointer: 'pointer'
+    },
+    screens: {
+      'xl': '1184px'
     }
   },
   variants: {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { PostMeta } from "../../utils/types";
 import LogoHeader from './logoHeader';
 import SidebarListItem from "./sidebarListItem";
@@ -11,23 +11,38 @@ export type SidebarProps = {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ list }) => {
-    const { currentPost, menuOpen, setMenuOpen } = useContext(PostContext);
+    const { currentPost, menuOpen, setMenuOpen, mainScrollPosition, setMainScrollPosition } = useContext(PostContext);
 
     const handleClickHamburger = () => {
-        setMenuOpen(!menuOpen);
+        const newMenuOpen = !menuOpen;
+        if (newMenuOpen) {
+            // Scroll to the top of the menu
+            if (window.innerHeight <= 1184) {
+                // Menu is open, so save the current scroll position of the window
+                setMainScrollPosition(window.scrollY || 0);
+                window.scrollTo(0, 0);
+            }
+        }
+        setMenuOpen(newMenuOpen);
     }
+
+    useEffect(() => {
+        if (!menuOpen && window.innerWidth <= 1184) {
+            window.scrollTo(0, mainScrollPosition);
+        }
+    }, [menuOpen]);
 
     return (
         <div className={`w-sidebar bg-white border-r border-gray-200 flex-col justify-between flex xl:h-full ${menuOpen ? 'h-full' : ''}`}>
-            <div className="flex-col flex-grow overflow-hidden flex">
+            <div className="flex-col flex-grow xl:overflow-hidden flex">
                 <LogoHeader title="Dan Caldwell" href="/" onClickHamburger={handleClickHamburger} hamburgerVisible={!menuOpen} />
-                <div className={`flex-col overflow-hidden xl:flex ${menuOpen ? "flex" : "hidden"}`}>
+                <div className={`flex-col xl:overflow-hidden xl:flex bg-white xl:mt-0 mt-16 ${menuOpen ? "flex" : "hidden"}`}>
                     <div className="w-full flex">
                         <Link href="/about">
                             <a className="px-4 py-2 w-full border-b border-gray-200 hover:no-underline hover:bg-purple-50">About</a>
                         </Link>
                     </div>
-                    <div className="overflow-y-scroll flex-col flex-grow flex">
+                    <div className="xl:overflow-y-scroll flex-col flex-grow flex">
                         {list.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
                     </div>
                 </div>
