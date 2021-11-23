@@ -9,7 +9,8 @@
 [√] Click to enlarge image
 [√] Sort posts by date
 [√] Open link in new tab with pictures -> image opacity doesn't go to 1
-[ ] Compress RNS big image srcs
-[ ] Import post content
+[√] Remove Image width/height on mobile
+[√] Compress RNS big image srcs
+[√] Import post content
 [ ] When ready to switch, add Cloudfront and set up domain name
-[ ] Remove Image width/height on mobile
+[ ] CSS transitions on scroll to make a more cinematic experience 
