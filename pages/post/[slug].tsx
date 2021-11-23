@@ -8,10 +8,12 @@ import { PostContext } from '../../components/context/PostContext';
 import ContentContainer from '../../components/contentContainer';
 import Header from '../../components/text/header';
 import Image from '../../components/basic/Image';
+import AnimatedScroll from '../../components/scroll/animatedScroll';
 
 const mdxComponents = {
     YouTube,
-    Image
+    Image,
+    AnimatedScroll
 }
 
 export const getStaticPaths = async () => {

@@ -53,10 +53,6 @@
 }
 
 @layer utilities {
-    .m-sidebar {
-        margin-left: 20rem;
-        max-width: calc(100vw - 20rem);
-    }
 
     .w-sidebar {}
 
@@ -102,6 +98,12 @@
     .w-sidebar {
         @apply w-80;
     }
+
+    .m-sidebar {
+        margin-left: 20rem;
+        max-width: calc(100vw - 20rem);
+    }
+
     .w-200 {
         width: 50rem;
     }

@@ -27,12 +27,17 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
         }, 50);
     }, [currentPost]);
 
+    const handleScroll = e => {
+        console.log(e.target.scrollTop);
+    }
+
     return (
-        <div className="flex flex-col xl:flex-row h-screen xl:overflow-hidden">
+        <div className="flex flex-col xl:flex-row h-screen">
             <Sidebar list={postList} />
             <main ref={mainRef} className={`
-                flex-col flex-grow px-8 mt-16
-                xl:overflow-y-scroll xl:min-h-full xl:px-0 xl:mt-0 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}
+                flex-col flex-grow px-8 mt-16 m-sidebar
+                xl:min-h-full xl:px-0 xl:mt-0 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}
+                onScroll={handleScroll}
             >
                 {children}
             </main>
