@@ -14,3 +14,4 @@
 [√] Import post content
 [ ] When ready to switch, add Cloudfront and set up domain name
 [ ] CSS transitions on scroll to make a more cinematic experience 
+    [ ] When done scrolling, remove extra margin caused by sticky

@@ -92,6 +92,14 @@
     .max-w-5xs {
         max-width: 4rem;
     }
+
+    .pt-full {
+        padding-top: 100%;
+    }
+
+    .pt-16-9 {
+        padding-top: 56.25%;
+    }
 }
 
 @screen xl {

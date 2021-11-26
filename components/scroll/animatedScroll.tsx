@@ -1,37 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type AnimatedScrollProps = {
     children: React.ReactNode[]
 }
 
-const timelineMin = 0;
 const timelineMax = 6000;
 
 const AnimatedScroll: React.FC<AnimatedScrollProps> = ({ children }) => {
     const [scrollTop, setScrollTop] = useState(0);
+    const adjustedTimeline = useRef(timelineMax);
 
     const handleScroll = e => {
         setScrollTop(window.scrollY);
     }
 
     useEffect(() => {
+        adjustedTimeline.current = timelineMax + window.innerHeight
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     // Timeline length for each child
-    const childLengthRatios = [...Array(children.length)].map((num, index) => index === 0 ? 0.5 : 1);
+    const childLengthRatios = [0.5, ...Array(children.length - 1).fill(1), -0.5];
     const totalTimelineRatio = childLengthRatios.reduce((a, b) => a + b, 0);
     const childMultiples = childLengthRatios.map(ratio => (ratio / totalTimelineRatio) * timelineMax);
     const childScrollCutoffs = childMultiples.map((multiple, index) => childMultiples.slice(0, index).reduce((a, b) => a + b, 0) + multiple);
 
     const currentChild = childScrollCutoffs.findIndex(item => scrollTop <= item);
 
-    //const childMultiple = timelineMax / children.length;
-    //console.log({ childMultiple, childScrollCutoffs });
-    //const totalProgress = scrollTop / childMultiple
-    //const progress = (totalProgress) - currentChild + 0.5;
-    //const progress = (scrollTop / childMultiples[currentChild]) - childLengthRatios[currentChild];
     const previousCutoffValue = currentChild === 0 ? 0 : childScrollCutoffs[currentChild - 1];
     const progressScrollTotal = childScrollCutoffs[currentChild] - previousCutoffValue;
     const progress = (scrollTop - previousCutoffValue) / progressScrollTotal;
@@ -42,13 +38,13 @@ const AnimatedScroll: React.FC<AnimatedScrollProps> = ({ children }) => {
         <>
             <div
                 style={{
-                    height: timelineMax + 'px'
+                    height: adjustedTimeline.current + 'px'
                 }}
             >
-                <div 
+                <div
                     className="sticky"
                     style={{
-                        top: `50vh`,
+                        top: `50%`,
                         transform: `translate(0, -50%) perspective(100rem) rotateY(${rotation}deg)`
                     }}
                 >

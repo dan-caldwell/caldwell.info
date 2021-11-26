@@ -12,10 +12,24 @@ type ImageProps = {
     clickEnlarge?: boolean,
     float?: 'left' | 'right',
     className?: string,
-    center?: boolean
+    center?: boolean,
+    lazy?: boolean
 }
 
-const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth = true, width, height, float, center = true, className = '', clickEnlarge = true }) => {
+const Image: React.FC<ImageProps> = ({ 
+    src, 
+    previewSrc, 
+    caption, 
+    alt, 
+    fullWidth = true, 
+    width, 
+    height, 
+    float, 
+    center = true, 
+    className = '', 
+    clickEnlarge = true,
+    lazy = true
+}) => {
     const [loadedSrc, setLoadedSrc] = useState<boolean>(false);
     const [imageRatio, setImageRatio] = useState<number>(0);
     const [enlarged, setEnlarged] = useState<boolean>(false);
@@ -24,7 +38,7 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
     if (float) fullWidth = false;
 
     const imgClassName = [
-        !caption ? `mb-4` : '',
+        !caption ? `mb-4 last:mb-0` : '',
         center ? 'mx-auto' : '',
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
@@ -35,7 +49,7 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
     const captionClassName = [
         loadedSrc ? 'visible' : 'invisible',
         center ? 'text-center' : '',
-        'mb-4 italic mt-2 text-gray-600'
+        'mb-4 italic mt-2 text-gray-600 last:mb-0'
     ].join(' ');
 
     useEffect(() => {
@@ -54,7 +68,7 @@ const Image: React.FC<ImageProps> = ({ src, previewSrc, caption, alt, fullWidth 
             <img
                 src={previewSrc || src}
                 onLoad={() => setLoadedSrc(true)}
-                loading="lazy"
+                loading={lazy ? 'lazy' : null}
                 alt={alt}
                 className={imgClassName + ' ' + className}
                 ref={imageRef}

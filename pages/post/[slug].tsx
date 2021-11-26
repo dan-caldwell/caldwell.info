@@ -9,11 +9,13 @@ import ContentContainer from '../../components/contentContainer';
 import Header from '../../components/text/header';
 import Image from '../../components/basic/Image';
 import AnimatedScroll from '../../components/scroll/animatedScroll';
+import TitleCard from '../../components/cards/titleCard';
 
 const mdxComponents = {
     YouTube,
     Image,
-    AnimatedScroll
+    AnimatedScroll,
+    TitleCard
 }
 
 export const getStaticPaths = async () => {
@@ -40,17 +42,19 @@ export const getStaticProps = async ({ params: { slug } }) => {
     }
 }
 
-const Post = ({ source, meta: { title }, slug }) => {
+const Post = ({ source, meta: { title, hideTitle }, slug }) => {
     const { setCurrentPost } = useContext(PostContext);
-    
+
     useEffect(() => {
         setCurrentPost(slug);
         return () => setCurrentPost(null);
     }, [setCurrentPost, slug]);
 
     return (
-        <ContentContainer className="my-8">
-            <Header title={title} />
+        <ContentContainer className={!hideTitle ? `my-8` : ''}>
+            {!hideTitle &&
+                <Header title={title} />
+            }
             <MDXRemote {...source} components={mdxComponents} />
         </ContentContainer>
     );
