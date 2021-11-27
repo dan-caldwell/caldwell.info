@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-gray-100 overscroll-none;
+        @apply overscroll-none p-0 m-0;
     }
 
     h1 {
@@ -54,7 +54,29 @@
 
 @layer utilities {
 
-    .w-sidebar {}
+    .border-2rem {
+        border-width: 2rem;
+    }
+
+    .border-1rem {
+        border-width: 1rem;
+    }
+
+    .border-half-rem {
+        border-width: 0.5rem;
+    }
+
+    .snap-x-mandatory {
+        scroll-snap-type: x mandatory;
+    }
+
+    .snap-center {
+        scroll-snap-align: center;
+    }
+
+    .snap-stop-always {
+        scroll-snap-stop: always;
+    }
 
     .w-144 {
         width: 36rem;

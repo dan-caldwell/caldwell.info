@@ -3,14 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn handle-images && yarn static-post-list && next dev",
-    "build": "yarn static-post-list && next build && next export",
+    "dev": "next dev",
+    "build": "next build && next export",
     "start": "next start",
     "export": "next export",
-    "handle-images": "npx ts-node scripts/handle-images/index.ts",
-    "compress-image": "npx ts-node scripts/compress-image/index.ts",
-    "sh-compress-images": "sh scripts/shell-scripts/compress-images.txt",
-    "static-post-list": "npx ts-node scripts/static-post-list/static-post-list.ts",
     "test": "jest"
   },
   "dependencies": {
@@ -29,6 +25,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-html-parser": "^2.0.2",
+    "react-swipeable": "^6.2.0",
     "react-youtube": "^7.13.1",
     "sharp": "^0.29.2",
     "yargs": "^17.2.1"

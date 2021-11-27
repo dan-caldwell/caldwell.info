@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import ContentContainer from '../components/contentContainer';
-import Image from '../components/basic/Image';
+import React from 'react';
+import Folder from '../components/navigation/Folder';
 
 export default function IndexPage() {
     return (
@@ -8,12 +8,19 @@ export default function IndexPage() {
             <Head>
                 <title>Home page</title>
             </Head>
-            <ContentContainer className="items-center">
-                <h1 className="text-3xl font-bold leading-9 mb-8 leading-none">
-                    Hello — my name is Dan Caldwell. I’m a software engineer. This is a selection of my personal and professional work.
-                </h1>
-                <Image src="https://s3.amazonaws.com/caldwell.info/images/doodle-1-1000x764-s0.5-q100.jpg" alt="large doodle" clickEnlarge={false} />
-            </ContentContainer>
+            <div className="mx-2">
+                <div className="my-2 flex justify-between items-center">
+                    <div className="text-blue-600">Browse</div>
+                    <div className="font-bold">Dan Caldwell</div>
+                    <div className="text-blue-600">...</div>
+                </div>
+                <div className="flex flex-wrap">
+                    <Folder title="Home" href="/" />
+                    <Folder title="About" href="/" />
+                    <Folder title="Projects" href="/project" />
+                    <Folder title="Blog" href="/" />
+                </div>
+            </div>
         </>
     );
 }
