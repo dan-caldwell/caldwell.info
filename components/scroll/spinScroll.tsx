@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-type AnimatedScrollProps = {
+type SpinScrollProps = {
     children: React.ReactNode[]
 }
 
 const timelineMax = 6000;
 
-const AnimatedScroll: React.FC<AnimatedScrollProps> = ({ children }) => {
+const SpinScroll: React.FC<SpinScrollProps> = ({ children }) => {
     const [scrollTop, setScrollTop] = useState(0);
     const adjustedTimeline = useRef(timelineMax);
 
@@ -42,14 +42,17 @@ const AnimatedScroll: React.FC<AnimatedScrollProps> = ({ children }) => {
                 }}
             >
                 <div
-                    className="sticky"
+                    className="sticky max-h-screen"
                     style={{
                         top: `50%`,
                         transform: `translate(0, -50%) perspective(100rem) rotateY(${rotation}deg)`
                     }}
                 >
                     {children.map((child, index) => (
-                        <div key={index} className={currentChild === index ? "block" : "hidden"}>{child}</div>
+                        <div 
+                            key={index} 
+                            className={`w-full h-full ${currentChild === index ? "block" : "hidden"}`}
+                        >{child}</div>
                     ))}
                 </div>
             </div>
@@ -58,4 +61,4 @@ const AnimatedScroll: React.FC<AnimatedScrollProps> = ({ children }) => {
     )
 }
 
-export default AnimatedScroll;
+export default SpinScroll;

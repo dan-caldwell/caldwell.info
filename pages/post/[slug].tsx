@@ -8,13 +8,13 @@ import { PostContext } from '../../components/context/PostContext';
 import ContentContainer from '../../components/contentContainer';
 import Header from '../../components/text/header';
 import Image from '../../components/basic/Image';
-import AnimatedScroll from '../../components/scroll/animatedScroll';
+import SpinScroll from '../../components/scroll/spinScroll';
 import TitleCard from '../../components/cards/titleCard';
 
 const mdxComponents = {
     YouTube,
     Image,
-    AnimatedScroll,
+    SpinScroll,
     TitleCard
 }
 

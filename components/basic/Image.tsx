@@ -16,17 +16,17 @@ type ImageProps = {
     lazy?: boolean
 }
 
-const Image: React.FC<ImageProps> = ({ 
-    src, 
-    previewSrc, 
-    caption, 
-    alt, 
-    fullWidth = true, 
-    width, 
-    height, 
-    float, 
-    center = true, 
-    className = '', 
+const Image: React.FC<ImageProps> = ({
+    src,
+    previewSrc,
+    caption,
+    alt,
+    fullWidth = true,
+    width,
+    height,
+    float,
+    center = true,
+    className = '',
     clickEnlarge = true,
     lazy = true
 }) => {
@@ -43,7 +43,7 @@ const Image: React.FC<ImageProps> = ({
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
         clickEnlarge ? 'cursor-zoom-in' : '',
-        `transition-opacity duration-200 ease-in-out`,
+        `transition-opacity duration-200 ease-in-out object-contain sticky top-0`,
     ].join(' ');
 
     const captionClassName = [
