@@ -41,18 +41,9 @@ const UltraCSS = () => {
 
     return (
         <MobileContentViewer
-            title="UltraCSS"
-            originTitle="Projects"
-            originHref="/project"
             scroll="horizontal"
-        >
-            {pages.map((page, index) => (
-                <PrintPage
-                    key={index}
-                    className="snap-center snap-stop-always"
-                >{page}</PrintPage>
-            ))}
-        </MobileContentViewer>
+            pages={pages}
+        ></MobileContentViewer>
     )
 }
 
