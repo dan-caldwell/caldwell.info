@@ -1,7 +1,5 @@
+import MdPage from "../../components/content/MdPage";
 import MobileContentViewer from "../../components/layouts/mobile/MobileContentViewer";
-import PrintPage from "../../components/content/PrintPage";
-import marked from 'marked';
-import ReactHtmlParser from 'react-html-parser';
 
 const page1 = `
 I created UltraCSS as a way to quickly and easily make pixel perfect mockups and graphics using a tool web developers already know: CSS.
@@ -25,26 +23,21 @@ const page3 = `
 - Try it out: [UltraCSS.com](https://ultracss.com)
 `;
 
-const UltraCSS = () => {
+const pages = [
+    <MdPage content={page1} />,
+    <MdPage content={page2} />,
+    <MdPage content={page3} />,
+];
 
-    const pages = [
-        <div>
-            {ReactHtmlParser(marked(page1))}
-        </div>,
-        <div>
-            {ReactHtmlParser(marked(page2))}
-        </div>,
-        <div>
-            {ReactHtmlParser(marked(page3))}
-        </div>
-    ];
+const UltraCSS = () => {
 
     return (
         <MobileContentViewer
             scroll="horizontal"
             pages={pages}
+            title="UltraCSS"
         ></MobileContentViewer>
-    )
+    );
 }
 
 export default UltraCSS;

@@ -1,15 +1,17 @@
 
 type ScrollProgressProps = {
     numItems: number,
-    currentItem: number
+    currentItem: number,
 }
 
 const ScrollProgress: React.FC<ScrollProgressProps> = ({
     numItems = 0,
-    currentItem = 0
+    currentItem = 0,
 }) => {
     return (
-        <div>{currentItem} / {numItems}</div>
+        <div className="text-sm">
+            <span>{currentItem} / {numItems}</span>
+        </div>
     )
 }
 

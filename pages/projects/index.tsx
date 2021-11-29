@@ -19,6 +19,11 @@ const Projects = () => {
                 src="https://s3.amazonaws.com/caldwell.info/images/the-coffee-shop-revolution/thumbnail.jpg"
                 href="/projects/ultracss"
             />
+            <ContentItem
+                title="A New Way to Monetize Social Media"
+                src="https://s3.amazonaws.com/caldwell.info/images/a-new-way-to-monetize-social-media/thumbnail.jpg"
+                href="/projects/a-new-way-to-monetize-social-media"
+            />
         </MobileBrowser>
     )
 }

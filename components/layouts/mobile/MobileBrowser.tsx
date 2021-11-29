@@ -10,9 +10,9 @@ const MobileBrowser: React.FC<MobileBrowserProps> = ({
     className
 }) => {
     return (
-        <div className={`h-screen w-container mx-auto bg-white ${className || ''}`}>
+        <div className={`h-screen-fix mx-auto flex flex-col ${className || ''}`}>
             <MobileNavbar />
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap w-container bg-white mx-auto flex-1">
                 {children}
             </div>
         </div>
