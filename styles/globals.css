@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --app-height: 100%;
+}
+
 @layer base {
     body {
-        @apply bg-gray-100 overscroll-none;
+        @apply overscroll-none p-0 m-0 bg-gray-100;
     }
 
     h1 {
@@ -40,7 +44,7 @@
     }
 
     a {
-        @apply text-purple-600 hover:underline;
+        @apply text-purple-600;
     }
 
     li a {
@@ -54,12 +58,34 @@
 
 @layer utilities {
 
-    .w-sidebar {}
+    .border-2rem {
+        border-width: 2rem;
+    }
+
+    .border-1rem {
+        border-width: 1rem;
+    }
+
+    .border-half-rem {
+        border-width: 0.5rem;
+    }
+
+    .snap-x-mandatory {
+        scroll-snap-type: x mandatory;
+    }
+
+    .snap-center {
+        scroll-snap-align: center;
+    }
+
+    .snap-stop-always {
+        scroll-snap-stop: always;
+    }
 
     .w-144 {
         width: 36rem;
     }
-    
+
     .w-160 {
         width: 40rem;
     }
@@ -68,13 +94,29 @@
         width: 100%;
         max-width: 50rem;
     }
-    
+
     .w-240 {
         width: 60rem;
     }
 
     .w-192 {
         width: 48rem;
+    }
+
+    .w-container {
+        width: 100vw;
+    }
+
+    .max-w-5xs {
+        max-width: 2rem;
+    }
+
+    .max-w-4xs {
+        max-width: 4rem;
+    }
+
+    .max-w-3xs {
+        max-width: 8rem;
     }
 
     .max-w-2xs {
@@ -100,9 +142,22 @@
     .pt-16-9 {
         padding-top: 56.25%;
     }
+
+    .h-screen-fix {
+        height: var(--app-height);
+    }
 }
 
 @screen xl {
+    
+    a {
+        @apply hover:underline;
+    }
+
+    .w-container {
+        width: 50rem;
+    }
+
     .w-sidebar {
         @apply w-80;
     }
@@ -112,9 +167,6 @@
         max-width: calc(100vw - 20rem);
     }
 
-    .w-200 {
-        width: 50rem;
-    }
     iframe {
         height: 28.125rem;
     }

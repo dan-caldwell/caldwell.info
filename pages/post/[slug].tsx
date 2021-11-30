@@ -6,16 +6,19 @@ import YouTube from 'react-youtube';
 import PostUtils from '../../utils/PostUtils';
 import { PostContext } from '../../components/context/PostContext';
 import ContentContainer from '../../components/contentContainer';
-import Header from '../../components/text/header';
 import Image from '../../components/basic/Image';
 import SpinScroll from '../../components/scroll/spinScroll';
 import TitleCard from '../../components/cards/titleCard';
+import PrintPageContainer from '../../components/content/PrintPageContainer';
+import Md from '../../components/content/Md';
 
 const mdxComponents = {
     YouTube,
     Image,
     SpinScroll,
-    TitleCard
+    TitleCard,
+    PrintPageContainer,
+    Md
 }
 
 export const getStaticPaths = async () => {
@@ -51,10 +54,7 @@ const Post = ({ source, meta: { title, hideTitle }, slug }) => {
     }, [setCurrentPost, slug]);
 
     return (
-        <ContentContainer className={!hideTitle ? `my-8` : ''}>
-            {!hideTitle &&
-                <Header title={title} />
-            }
+        <ContentContainer>
             <MDXRemote {...source} components={mdxComponents} />
         </ContentContainer>
     );

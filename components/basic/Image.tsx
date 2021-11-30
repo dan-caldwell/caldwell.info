@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import XButton from './xButton';
+import XButton from './XButton';
 
 type ImageProps = {
     src: string,
@@ -43,7 +43,7 @@ const Image: React.FC<ImageProps> = ({
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
         clickEnlarge ? 'cursor-zoom-in' : '',
-        `transition-opacity duration-200 ease-in-out object-contain sticky top-0`,
+        `transition-opacity duration-200 ease-in-out object-contain top-0`,
     ].join(' ');
 
     const captionClassName = [
