@@ -146,6 +146,12 @@
     .h-screen-fix {
         height: var(--app-height);
     }
+
+    .min-h-min-content {
+        min-height: min-content;
+        min-height: -moz-min-content;
+        min-height: -webkit-min-content;
+    }
 }
 
 @screen xl {

@@ -14,14 +14,16 @@ const PrintPage: React.FC<PrintPageProps> = ({ children, className = '', style =
     return (
         <InView threshold={0.5} onChange={value => value ? onInView(id) : null}>
             {({ ref }) => (
-                <div 
-                    ref={ref} 
-                    className={`p-2 xl:p-4 flex flex-col justify-center bg-white w-container h-full border-half-rem border-gray-200 flex-shrink-0 overflow-y-scroll ${className}`}
+                <div
+                    ref={ref}
+                    className={`PrintPage p-2 xl:p-4 flex-shrink-0 w-container bg-white flex flex-col overflow-y-scroll h-full min-h-min-content ${className}`}
                     style={{
                         ...style
                     }}
                 >
-                    {children}
+                    <div className="my-auto">
+                        {children}
+                    </div>
                 </div>
             )}
         </InView>
