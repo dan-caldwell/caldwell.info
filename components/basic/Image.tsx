@@ -6,6 +6,8 @@ type ImageProps = {
     previewSrc?: string,
     alt: string,
     caption?: string,
+    captionPosition?: 'top' | 'bottom',
+    captionStyle?: 'regular' | 'italic',
     fullWidth?: boolean,
     width?: number,
     height?: number,
@@ -20,6 +22,8 @@ const Image: React.FC<ImageProps> = ({
     src,
     previewSrc,
     caption,
+    captionPosition = 'top',
+    captionStyle = 'regular',
     alt,
     fullWidth = true,
     width,
@@ -49,7 +53,9 @@ const Image: React.FC<ImageProps> = ({
     const captionClassName = [
         loadedSrc ? 'visible' : 'invisible',
         center ? 'text-center' : '',
-        'mb-4 italic mt-2 text-gray-600 last:mb-0'
+        captionPosition === 'bottom' ? 'mt-2' : '',
+        captionStyle === 'italic' ? 'italic text-gray-600' : '',
+        'mb-4 last:mb-0'
     ].join(' ');
 
     useEffect(() => {
@@ -65,6 +71,9 @@ const Image: React.FC<ImageProps> = ({
 
     return (
         <>
+            {(caption && captionPosition === 'top') &&
+                <div className={captionClassName}>{caption}</div>
+            }
             <img
                 src={previewSrc || src}
                 onLoad={() => setLoadedSrc(true)}
@@ -102,7 +111,7 @@ const Image: React.FC<ImageProps> = ({
                     ></div>
                 </>
             }
-            {caption &&
+            {(caption && captionPosition === 'bottom') &&
                 <div className={captionClassName}>{caption}</div>
             }
         </>

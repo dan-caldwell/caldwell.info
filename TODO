@@ -16,3 +16,4 @@
 [ ] CSS transitions on scroll to make a more cinematic experience 
     [ ] When done scrolling, remove extra margin caused by sticky
 [ ] Open portfolio links in new tab (e.g. ultracss.com)
+[ ] Load lazy loaded images one slide early

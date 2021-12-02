@@ -14,17 +14,20 @@ const PrintPageContainer = ({ children }) => {
         scrollContainer.current.scrollTo({
             top: 0,
             left: pageWidth * newScrollItem,
-            behavior: 'smooth'
         });
     }
 
     return (
         <div className="PrintPageContainer h-full mx-auto flex flex-grow flex-col relative">
-            <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
+            {children.length &&
+                <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
+            }
             <div className="w-container mx-auto relative min-h-full w-full">
                 <div ref={scrollContainer} className="flex w-full h-full overflow-x-scroll snap-x-mandatory">
-                    <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide} />
-                    {children.map((child, index) => (
+                    {children.length &&
+                        <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide} />
+                    }
+                    {(!children.length ? [children] : children).map((child, index) => (
                         <PrintPage
                             key={index}
                             className="snap-center snap-stop-always"
