@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import NextPreviousButtons from './NextPreviousButtons';
 import PrintPage from './PrintPage';
 import ScrollProgress from './ScrollProgress';
+import { PostContext } from '../context/PostContext';
 
 const PrintPageContainer = ({ children }) => {
-    const [currentScrollItem, setCurrentScrollItem] = useState(0);
+    const { currentScrollItem, setCurrentScrollItem } = useContext(PostContext);
     const scrollContainer = useRef(null);
 
     const handleNavigateSlide = (direction: 'next' | 'previous') => {
@@ -23,7 +24,7 @@ const PrintPageContainer = ({ children }) => {
                 <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
             }
             <div className="w-container mx-auto relative min-h-full w-full">
-                <div ref={scrollContainer} className="flex w-full h-full overflow-x-scroll snap-x-mandatory">
+                <div ref={scrollContainer} className="PrintPageContainer-OverflowContainer flex w-full h-full overflow-x-scroll snap-x-mandatory">
                     {children.length &&
                         <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide} />
                     }
@@ -33,6 +34,7 @@ const PrintPageContainer = ({ children }) => {
                             className="snap-center snap-stop-always"
                             id={index}
                             onInView={id => setCurrentScrollItem(id)}
+                            currentItem={currentScrollItem}
                         >
                             {child}
                         </PrintPage>

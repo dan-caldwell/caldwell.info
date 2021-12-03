@@ -1,5 +1,5 @@
-import React, { ReactNode, useContext, useEffect, useRef, useState } from "react";
-import Sidebar from "../sidebar/sidebar";
+import React, { ReactNode, useContext, useEffect, useRef } from "react";
+import Sidebar from "../sidebar/Sidebar";
 import PostList from '../../json/post-list.json';
 import { PostMeta } from "../../utils/types";
 import { PostContext } from "../context/PostContext";

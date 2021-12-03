@@ -1,7 +1,7 @@
-import ContentContainer from "../components/contentContainer";
+import ContentContainer from "../components/ContentContainer";
 import marked from 'marked';
 import ReactHtmlParser from 'react-html-parser';
-import Header from "../components/text/header";
+import Header from "../components/text/Header";
 
 const md = `
 <img align="right" src="https://cms.caldwell.info/wp-content/uploads/2020/12/0.jpg">

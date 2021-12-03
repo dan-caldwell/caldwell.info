@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import ContentContainer from '../components/contentContainer';
+import ContentContainer from '../components/ContentContainer';
 import Image from '../components/basic/Image';
 
 export default function IndexPage() {

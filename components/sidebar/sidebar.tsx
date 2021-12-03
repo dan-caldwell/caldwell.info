@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { PostMeta } from "../../utils/types";
-import LogoHeader from './logoHeader';
-import SidebarListItem from "./sidebarListItem";
+import LogoHeader from './LogoHeader';
+import SidebarListItem from "./SidebarListItem";
 import { PostContext } from "../context/PostContext";
 import Link from "next/link";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 export type SidebarProps = {
     list: PostMeta[],
@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ list }) => {
         if (!menuOpen && window.innerWidth <= 1184) {
             window.scrollTo(0, mainScrollPosition);
         }
-    }, [menuOpen]);
+    }, [menuOpen, mainScrollPosition]);
 
     return (
         <div className={`xl:fixed w-sidebar bg-white border-r border-gray-200 flex-col justify-between flex xl:h-full ${menuOpen ? 'h-full' : ''}`}>

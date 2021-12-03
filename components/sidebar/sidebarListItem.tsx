@@ -26,7 +26,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
             container.current.scrollIntoView(false);
         }
         if (!loaded && currentPost) setLoaded(true);
-    }, [currentPost, loaded]);
+    }, [currentPost, loaded, slug]);
 
     return (
         <div className="flex" ref={container}>

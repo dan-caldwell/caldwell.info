@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
-import Logo from '../logo';
-import Hamburger from '../basic/hamburger';
+import Logo from '../Logo';
+import Hamburger from '../basic/Hamburger';
 import XButton from '../basic/XButton';
 
 type LogoHeaderProps = {

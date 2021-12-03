@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import XButton from './XButton';
+import { PostContext } from '../context/PostContext';
 
 type ImageProps = {
     src: string,
@@ -37,7 +38,9 @@ const Image: React.FC<ImageProps> = ({
     const [loadedSrc, setLoadedSrc] = useState<boolean>(false);
     const [imageRatio, setImageRatio] = useState<number>(0);
     const [enlarged, setEnlarged] = useState<boolean>(false);
+    const [lazyLoad, setLazyLoad] = useState(lazy);
     const imageRef = useRef(null);
+    const { currentScrollItem } = useContext(PostContext);
 
     if (float) fullWidth = false;
 
@@ -67,7 +70,19 @@ const Image: React.FC<ImageProps> = ({
         if (imageRef.current && imageRef.current.complete && !loadedSrc) {
             setLoadedSrc(true)
         }
-    });
+    }, [loadedSrc]);
+
+
+    // This will remove the lazy load attribute one slide before the Image, so the image has time to load before being displayed
+    useEffect(() => {
+        if (imageRef.current && lazyLoad) {
+            const printPage = imageRef.current?.closest('.PrintPage');
+            const printPageId = Number(printPage?.dataset?.id);
+            if (!isNaN(printPageId) && printPageId - currentScrollItem === 1) {
+                setLazyLoad(false);
+            }
+        }
+    }, [currentScrollItem]);
 
     return (
         <>
@@ -77,7 +92,7 @@ const Image: React.FC<ImageProps> = ({
             <img
                 src={previewSrc || src}
                 onLoad={() => setLoadedSrc(true)}
-                loading={lazy ? 'lazy' : null}
+                loading={lazyLoad ? 'lazy' : null}
                 alt={alt}
                 className={imgClassName + ' ' + className}
                 ref={imageRef}

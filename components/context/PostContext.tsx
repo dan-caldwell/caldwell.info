@@ -7,6 +7,8 @@ type ContextProps = {
     setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>,
     mainScrollPosition: number,
     setMainScrollPosition: React.Dispatch<React.SetStateAction<number>>,
+    currentScrollItem: number,
+    setCurrentScrollItem: React.Dispatch<React.SetStateAction<number>>,
 }
 
 export const PostContext = createContext<ContextProps>({} as ContextProps);
@@ -15,10 +17,15 @@ const PostProvider: React.FC = ({ children }) => {
     const [currentPost, setCurrentPost] = useState<string | null>(null);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [mainScrollPosition, setMainScrollPosition] = useState<number>(0);
+    const [currentScrollItem, setCurrentScrollItem] = useState<number>(0);
 
     useEffect(() => {
         setMenuOpen(false);
-        return () => setMenuOpen(false);
+        setCurrentScrollItem(0);
+        return () => {
+            setMenuOpen(false);
+            setCurrentScrollItem(0);
+        }
     }, [currentPost]);
 
     return (
@@ -29,7 +36,9 @@ const PostProvider: React.FC = ({ children }) => {
                 menuOpen,
                 setMenuOpen,
                 mainScrollPosition,
-                setMainScrollPosition
+                setMainScrollPosition,
+                currentScrollItem,
+                setCurrentScrollItem
             }}
         >
             {children}

@@ -5,10 +5,10 @@ import { MDXRemote } from 'next-mdx-remote';
 import YouTube from 'react-youtube';
 import PostUtils from '../../utils/PostUtils';
 import { PostContext } from '../../components/context/PostContext';
-import ContentContainer from '../../components/contentContainer';
+import ContentContainer from '../../components/ContentContainer';
 import Image from '../../components/basic/Image';
 import SpinScroll from '../../components/scroll/spinScroll';
-import TitleCard from '../../components/cards/titleCard';
+import TitleCard from '../../components/cards/TitleCard';
 import PrintPageContainer from '../../components/content/PrintPageContainer';
 import Md from '../../components/content/Md';
 

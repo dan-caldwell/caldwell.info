@@ -6,17 +6,19 @@ type PrintPageProps = {
     className?: string,
     style?: {},
     id: number,
-    onInView?: (id: number) => void
+    onInView?: (id: number) => void,
+    currentItem?: number
 }
 
-const PrintPage: React.FC<PrintPageProps> = ({ children, className = '', style = {}, id, onInView = () => { } }) => {
+const PrintPage: React.FC<PrintPageProps> = ({ children, className = '', style = {}, id, onInView = () => { }, currentItem }) => {
 
     return (
         <InView threshold={0.5} onChange={value => value ? onInView(id) : null}>
             {({ ref }) => (
                 <div
                     ref={ref}
-                    className={`PrintPage p-2 xl:p-4 flex-shrink-0 w-container bg-white flex flex-col overflow-y-scroll h-full min-h-min-content ${className}`}
+                    data-id={id}
+                    className={`PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} p-2 xl:p-4 flex-shrink-0 w-container bg-white flex flex-col overflow-y-scroll h-full min-h-min-content ${className}`}
                     style={{
                         ...style
                     }}
