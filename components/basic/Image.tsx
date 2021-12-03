@@ -82,7 +82,7 @@ const Image: React.FC<ImageProps> = ({
                 setLazyLoad(false);
             }
         }
-    }, [currentScrollItem]);
+    }, [currentScrollItem, lazyLoad]);
 
     return (
         <>
