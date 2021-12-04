@@ -11,6 +11,7 @@ import SpinScroll from '../../components/scroll/spinScroll';
 import TitleCard from '../../components/cards/TitleCard';
 import PrintPageContainer from '../../components/content/PrintPageContainer';
 import Md from '../../components/content/Md';
+import Header from '../../components/text/Header';
 
 const mdxComponents = {
     YouTube,
@@ -55,6 +56,7 @@ const Post = ({ source, meta: { title, hideTitle }, slug }) => {
 
     return (
         <ContentContainer>
+            <Header title={title} />
             <MDXRemote {...source} components={mdxComponents} />
         </ContentContainer>
     );

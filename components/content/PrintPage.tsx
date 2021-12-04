@@ -18,12 +18,16 @@ const PrintPage: React.FC<PrintPageProps> = ({ children, className = '', style =
                 <div
                     ref={ref}
                     data-id={id}
-                    className={`PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} p-2 xl:p-4 flex-shrink-0 w-container bg-white flex flex-col overflow-y-scroll h-full min-h-min-content ${className}`}
+                    className={`
+                        PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} 
+                        w-print-page p-8 flex-shrink-0 bg-white flex flex-col overflow-y-scroll flex-grow h-full
+                        ${className}
+                    `}
                     style={{
                         ...style
                     }}
                 >
-                    <div className="my-auto">
+                    <div className="m-auto max-w-container">
                         {children}
                     </div>
                 </div>

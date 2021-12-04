@@ -17,24 +17,20 @@ type NextPreviousButtonsProps = {
 const NextPreviousButtons: React.FC<NextPreviousButtonsProps> = ({ onNavigateSlide, currentItem, totalItems }) => {
     return (
         <>
-            {currentItem !== 1 &&
-                <button
-                    className="-ml-12 absolute top-1/2 w-8 h-8 left-0 bg-black rounded-full"
-                    onClick={() => onNavigateSlide('previous')}
-                    style={{
-                        transform: `translate(0, -50%)`
-                    }}
-                >{arrowLeft}</button>
-            }
-            {currentItem !== totalItems &&
-                <button
-                    className="-mr-12 absolute top-1/2 w-8 h-8 right-0 bg-black rounded-full"
-                    onClick={() => onNavigateSlide('next')}
-                    style={{
-                        transform: `translate(0, -50%)`
-                    }}
-                >{arrowRight}</button>
-            }
+            <button
+                className={`-ml-12 absolute top-1/2 w-8 h-8 left-0 bg-black rounded-full ${currentItem === -1 ? '' : 'invisible'}`}
+                onClick={() => onNavigateSlide('previous')}
+                style={{
+                    transform: `translate(0, -50%)`
+                }}
+            >{arrowLeft}</button>
+            <button
+                className={`-mr-12 absolute top-1/2 w-8 h-8 right-0 bg-black rounded-full ${currentItem !== totalItems ? '' : 'invisible'}`}
+                onClick={() => onNavigateSlide('next')}
+                style={{
+                    transform: `translate(0, -50%)`
+                }}
+            >{arrowRight}</button>
         </>
     )
 }

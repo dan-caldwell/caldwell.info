@@ -23,7 +23,7 @@ const Image: React.FC<ImageProps> = ({
     src,
     previewSrc,
     caption,
-    captionPosition = 'top',
+    captionPosition = 'bottom',
     captionStyle = 'regular',
     alt,
     fullWidth = true,
@@ -110,14 +110,14 @@ const Image: React.FC<ImageProps> = ({
             {enlarged &&
                 <>
                     <XButton
-                        className='fixed z-10 top-0 right-0 text-white w-8 h-8 mt-2 mr-2 cursor-pointer shadow-md rounded-full'
+                        className='fixed z-30 top-0 right-0 text-white w-8 h-8 mt-2 mr-2 cursor-pointer shadow-md rounded-full'
                         style={{
                             backgroundColor: 'rgba(0, 0, 0, 0.25)'
                         }}
                         onClick={() => setEnlarged(false)}
                     />
                     <div
-                        className="fixed inset-0 bg-no-repeat w-screen h-screen bg-center bg-contain cursor-zoom-out"
+                        className="fixed z-20 inset-0 bg-no-repeat w-screen h-screen bg-center bg-contain cursor-zoom-out"
                         onClick={() => setEnlarged(false)}
                         style={{
                             backgroundImage: `url(${src || previewSrc})`,

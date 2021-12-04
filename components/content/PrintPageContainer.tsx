@@ -19,11 +19,13 @@ const PrintPageContainer = ({ children }) => {
     }
 
     return (
-        <div className="PrintPageContainer h-full mx-auto flex flex-grow flex-col relative">
+        <div 
+            className="PrintPageContainer flex-grow mx-auto relative overflow-y-scroll"
+        >
             {children.length &&
                 <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
             }
-            <div className="w-container mx-auto relative min-h-full w-full">
+            <div className="w-print-page mx-auto relative h-full w-full">
                 <div ref={scrollContainer} className="PrintPageContainer-OverflowContainer flex w-full h-full overflow-x-scroll snap-x-mandatory">
                     {children.length &&
                         <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide} />

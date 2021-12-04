@@ -107,6 +107,18 @@
         width: 100vw;
     }
 
+    .max-w-container {
+        max-width: 50rem;
+    }
+
+    .w-main {
+        width: calc(100vw - 20rem);
+    }
+
+    .w-print-page {
+        width: calc(100vw - 42rem);
+    }
+
     .max-w-5xs {
         max-width: 2rem;
     }

@@ -25,7 +25,7 @@ const About = () => {
     return (
         <ContentContainer>
             <Header title="About" />
-            <div>
+            <div className="bg-white p-4">
                 {ReactHtmlParser(html)}
             </div>
         </ContentContainer>
