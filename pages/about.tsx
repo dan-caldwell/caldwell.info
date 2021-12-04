@@ -23,7 +23,7 @@ const html = marked(md);
 
 const About = () => {
     return (
-        <ContentContainer>
+        <ContentContainer className="w-container">
             <Header title="About" />
             <div className="bg-white p-4">
                 {ReactHtmlParser(html)}

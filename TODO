@@ -12,8 +12,10 @@
 [√] Remove Image width/height on mobile
 [√] Compress RNS big image srcs
 [√] Import post content
+[√] Load lazy loaded images one slide early
 [ ] When ready to switch, add Cloudfront and set up domain name
 [ ] CSS transitions on scroll to make a more cinematic experience 
     [ ] When done scrolling, remove extra margin caused by sticky
 [ ] Open portfolio links in new tab (e.g. ultracss.com)
-[ ] Load lazy loaded images one slide early
+[ ] Next/previous buttons become hidden when overflow-y-scroll on PrintPageContainer
+[ ] Site like Google Chrome PDF viewer?

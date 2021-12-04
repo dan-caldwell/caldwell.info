@@ -8,7 +8,7 @@ export default function IndexPage() {
             <Head>
                 <title>Home page</title>
             </Head>
-            <ContentContainer className="items-center">
+            <ContentContainer className="items-center w-container">
                 <h1 className="text-3xl font-bold leading-9 mb-8 leading-none">
                     Hello — my name is Dan Caldwell. I’m a software engineer. This is a selection of my personal and professional work.
                 </h1>
