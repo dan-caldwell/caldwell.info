@@ -14,7 +14,7 @@ type LogoHeaderProps = {
 const LogoHeader: React.FC<LogoHeaderProps> = ({ title, href, onClickHamburger, hamburgerVisible }) => {
     return (
         <div className="
-            flex max-w-full items-center border-b border-gray-200 cursor-pointer justify-between fixed w-full bg-white box-border
+            flex max-w-full items-center border-b border-gray-300 cursor-pointer justify-between fixed w-full box-border
             xl:hover:bg-purple-50 xl:static"
         >
             <Link href={href}>

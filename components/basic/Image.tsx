@@ -50,7 +50,7 @@ const Image: React.FC<ImageProps> = ({
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
         clickEnlarge ? 'cursor-zoom-in' : '',
-        `transition-opacity duration-200 ease-in-out object-contain top-0`,
+        `transition-opacity duration-200 ease-in-out object-contain top-0 max-w-full max-h-full`,
     ].join(' ');
 
     const captionClassName = [
@@ -86,27 +86,40 @@ const Image: React.FC<ImageProps> = ({
 
     return (
         <>
-            {(caption && captionPosition === 'top') &&
-                <div className={captionClassName}>{caption}</div>
-            }
-            <img
-                src={previewSrc || src}
-                onLoad={() => setLoadedSrc(true)}
-                loading={lazyLoad ? 'lazy' : null}
-                alt={alt}
-                className={imgClassName + ' ' + className}
-                ref={imageRef}
+            <div
+                className={`${fullWidth ? 'h-full w-full flex flex-col' : ''}`}
                 style={{
-                    width: width && imageRatio && !loadedSrc ?
-                        imageRatio * width + 'px' :
-                        null,
-                    height: height && imageRatio && !loadedSrc ?
-                        imageRatio * height + 'px' :
-                        null,
                     float
                 }}
-                onClick={clickEnlarge ? () => setEnlarged(!enlarged) : null}
-            />
+            >
+                {(caption && captionPosition === 'top') &&
+                    <div className={captionClassName}>{caption}</div>
+                }
+                <div
+                    className={`${fullWidth ? 'overflow-hidden' : ''}`}
+                >
+                    <img
+                        src={previewSrc || src}
+                        onLoad={() => setLoadedSrc(true)}
+                        loading={lazyLoad ? 'lazy' : null}
+                        alt={alt}
+                        className={imgClassName + ' ' + className}
+                        ref={imageRef}
+                        style={{
+                            width: width && imageRatio && !loadedSrc ?
+                                imageRatio * width + 'px' :
+                                null,
+                            height: height && imageRatio && !loadedSrc ?
+                                imageRatio * height + 'px' :
+                                null,
+                        }}
+                        onClick={clickEnlarge ? () => setEnlarged(!enlarged) : null}
+                    />
+                </div>
+                {(caption && captionPosition === 'bottom') &&
+                    <div className={captionClassName}>{caption}</div>
+                }
+            </div>
             {enlarged &&
                 <>
                     <XButton
@@ -125,9 +138,6 @@ const Image: React.FC<ImageProps> = ({
                         }}
                     ></div>
                 </>
-            }
-            {(caption && captionPosition === 'bottom') &&
-                <div className={captionClassName}>{caption}</div>
             }
         </>
     )

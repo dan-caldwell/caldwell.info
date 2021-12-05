@@ -11,7 +11,7 @@ const ScrollProgress: React.FC<ScrollProgressProps> = ({
 
     return (
         <div 
-            className="ScrollProgress text-xs absolute top-0 right-0 bg-purple-300 h-8 px-2 flex flex-col justify-center z-10 bg-opacity-50"
+            className="ScrollProgress text-xs px-2 flex flex-col align-center justify-center bg-opacity-50 mx-2"
         >
             <span className="flex">{currentItem} / {numItems}</span>
         </div>

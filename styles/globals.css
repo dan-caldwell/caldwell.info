@@ -107,6 +107,10 @@
         width: 100vw;
     }
 
+    .w-outer-container {
+        width: 74rem;
+    }
+
     .max-w-container {
         max-width: 50rem;
     }
@@ -181,8 +185,7 @@
     }
 
     .m-sidebar {
-        margin-left: 20rem;
-        max-width: calc(100vw - 20rem);
+        margin-left: 22rem;
     }
 
     iframe {

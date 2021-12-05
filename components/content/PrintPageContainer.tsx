@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import NextPreviousButtons from './NextPreviousButtons';
 import PrintPage from './PrintPage';
 import ScrollProgress from './ScrollProgress';
@@ -19,32 +19,37 @@ const PrintPageContainer = ({ children }) => {
     }
 
     return (
-        <div 
-            className="PrintPageContainer flex-grow mx-auto relative overflow-y-scroll"
-        >
+        <>
             {children.length &&
-                <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
-            }
-            <div className="w-print-page mx-auto relative h-full w-full">
-                <div ref={scrollContainer} className="PrintPageContainer-OverflowContainer flex w-full h-full overflow-x-scroll snap-x-mandatory">
-                    {children.length &&
-                        <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide} />
-                    }
-                    {(!children.length ? [children] : children).map((child, index) => (
-                        <PrintPage
-                            key={index}
-                            className="snap-center snap-stop-always"
-                            id={index}
-                            onInView={id => setCurrentScrollItem(id)}
-                            currentItem={currentScrollItem}
-                        >
-                            {child}
-                        </PrintPage>
-                    ))}
+                <div className="flex justify-center border-t border-b border-gray-300 mb-4 py-1 sticky top-0 bg-white z-10">
+                    <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide}>
+                        <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
+                    </NextPreviousButtons>
                 </div>
-            </div>
-        </div>
-
+            }
+            < div
+                className="PrintPageContainer flex-grow overflow-y-scroll w-container"
+            >
+                <div className="relative h-full w-full">
+                    <div 
+                        ref={scrollContainer} 
+                        className="PrintPageContainer-OverflowContainer flex w-full h-full overflow-x-scroll snap-x-mandatory"
+                    >
+                        {(!children.length ? [children] : children).map((child, index) => (
+                            <PrintPage
+                                key={index}
+                                className="snap-center snap-stop-always"
+                                id={index}
+                                onInView={id => setCurrentScrollItem(id)}
+                                currentItem={currentScrollItem}
+                            >
+                                {child}
+                            </PrintPage>
+                        ))}
+                    </div>
+                </div>
+            </div >
+        </>
     )
 }
 
