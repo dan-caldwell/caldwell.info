@@ -19,7 +19,7 @@ const PrintPage: React.FC<PrintPageProps> = ({ children, className = '', style =
                     ref={ref}
                     data-print-page-id={id}
                     className={`
-                        PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} 
+                        PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} mr-4 last:mr-0
                         flex-shrink-0 flex flex-col w-container overflow-y-scroll h-full
                         ${className}
                     `}
