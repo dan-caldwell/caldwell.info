@@ -17,17 +17,17 @@ const PrintPage: React.FC<PrintPageProps> = ({ children, className = '', style =
             {({ ref }) => (
                 <div
                     ref={ref}
-                    data-id={id}
+                    data-print-page-id={id}
                     className={`
-                        PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} 
-                        w-print-page p-8 flex-shrink-0 bg-white flex flex-col overflow-y-scroll flex-grow h-full
+                        PrintPage ${currentItem === id ? 'PrintPage-ActiveItem' : ''} mr-4 last:mr-0
+                        flex-shrink-0 flex flex-col w-container overflow-y-scroll h-full
                         ${className}
                     `}
                     style={{
                         ...style
                     }}
                 >
-                    <div className="m-auto max-w-container">
+                    <div className="max-w-container PrintPage-Content h-full w-full">
                         {children}
                     </div>
                 </div>

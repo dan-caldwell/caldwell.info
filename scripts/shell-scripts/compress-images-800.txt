@@ -4,6 +4,6 @@ urls=(
 
 for i in "${urls[@]}"
 do
-    yarn compress-image $i --scale 0.7 --quality 90
+    yarn compress-image $i --width 800 --quality 90
 done
 

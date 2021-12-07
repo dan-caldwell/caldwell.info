@@ -29,7 +29,7 @@ const Image: React.FC<ImageProps> = ({
     fullWidth = true,
     width,
     height,
-    float,
+    float = null,
     center = true,
     className = '',
     clickEnlarge = true,
@@ -37,7 +37,10 @@ const Image: React.FC<ImageProps> = ({
 }) => {
     const [loadedSrc, setLoadedSrc] = useState<boolean>(false);
     const [imageRatio, setImageRatio] = useState<number>(0);
-    const [enlarged, setEnlarged] = useState<boolean>(false);
+    // 0 = not enlarged
+    // 1 = enlarged size 1
+    // 2 = max enlarged (unused)
+    const [enlarged, setEnlarged] = useState<number>(0);
     const [lazyLoad, setLazyLoad] = useState(lazy);
     const imageRef = useRef(null);
     const { currentScrollItem } = useContext(PostContext);
@@ -50,7 +53,7 @@ const Image: React.FC<ImageProps> = ({
         loadedSrc ? 'opacity-100' : 'opacity-0',
         fullWidth ? 'w-full' : '',
         clickEnlarge ? 'cursor-zoom-in' : '',
-        `transition-opacity duration-200 ease-in-out object-contain top-0`,
+        `transition-opacity duration-200 ease-in-out object-contain top-0 max-w-full max-h-full`,
     ].join(' ');
 
     const captionClassName = [
@@ -77,7 +80,7 @@ const Image: React.FC<ImageProps> = ({
     useEffect(() => {
         if (imageRef.current && lazyLoad) {
             const printPage = imageRef.current?.closest('.PrintPage');
-            const printPageId = Number(printPage?.dataset?.id);
+            const printPageId = Number(printPage?.dataset?.printPageId);
             if (!isNaN(printPageId) && printPageId - currentScrollItem === 1) {
                 setLazyLoad(false);
             }
@@ -86,49 +89,66 @@ const Image: React.FC<ImageProps> = ({
 
     return (
         <>
-            {(caption && captionPosition === 'top') &&
-                <div className={captionClassName}>{caption}</div>
-            }
-            <img
-                src={previewSrc || src}
-                onLoad={() => setLoadedSrc(true)}
-                loading={lazyLoad ? 'lazy' : null}
-                alt={alt}
-                className={imgClassName + ' ' + className}
-                ref={imageRef}
-                style={{
-                    width: width && imageRatio && !loadedSrc ?
-                        imageRatio * width + 'px' :
-                        null,
-                    height: height && imageRatio && !loadedSrc ?
-                        imageRatio * height + 'px' :
-                        null,
-                    float
-                }}
-                onClick={clickEnlarge ? () => setEnlarged(!enlarged) : null}
-            />
-            {enlarged &&
+            <div
+                className={`
+                    ${fullWidth ? 'xl:h-full xl:w-full flex flex-col' : ''}
+                    ${float ? `xl:float-${float}` : ''} float-none
+                `}
+            >
+                {(caption && captionPosition === 'top') &&
+                    <div className={captionClassName}>{caption}</div>
+                }
+                <div
+                    className={`${fullWidth ? 'overflow-hidden' : ''}`}
+                >
+                    <img
+                        src={previewSrc || src}
+                        onLoad={() => setLoadedSrc(true)}
+                        loading={lazyLoad ? 'lazy' : null}
+                        alt={alt}
+                        className={imgClassName + ' ' + className}
+                        ref={imageRef}
+                        style={{
+                            width: width && imageRatio && !loadedSrc ?
+                                imageRatio * width + 'px' :
+                                null,
+                            height: height && imageRatio && !loadedSrc ?
+                                imageRatio * height + 'px' :
+                                null,
+                        }}
+                        onClick={clickEnlarge ? () => setEnlarged(1) : null}
+                    />
+                </div>
+                {(caption && captionPosition === 'bottom') &&
+                    <div className={captionClassName}>{caption}</div>
+                }
+            </div>
+            {enlarged ?
                 <>
                     <XButton
-                        className='fixed z-30 top-0 right-0 text-white w-8 h-8 mt-2 mr-2 cursor-pointer shadow-md rounded-full'
+                        className='fixed z-40 top-0 right-0 text-white w-8 h-8 mt-2 mr-2 cursor-pointer shadow-md rounded-full'
                         style={{
                             backgroundColor: 'rgba(0, 0, 0, 0.25)'
                         }}
-                        onClick={() => setEnlarged(false)}
+                        onClick={() => setEnlarged(0)}
                     />
                     <div
-                        className="fixed z-20 inset-0 bg-no-repeat w-screen h-screen bg-center bg-contain cursor-zoom-out"
-                        onClick={() => setEnlarged(false)}
+                        className="fixed z-20 inset-0 w-screen h-screen flex justify-center items-center overflow-y-scroll cursor-zoom-out"
+                        onClick={() => setEnlarged(0)}
                         style={{
-                            backgroundImage: `url(${src || previewSrc})`,
                             backgroundColor: 'rgba(0, 0, 0, 0.75)'
                         }}
-                    ></div>
+                    >
+                        <img 
+                            src={src || previewSrc}
+                            className={`
+                                z-30 select-none m-auto object-contain
+                                w-auto h-full max-h-full max-w-full
+                            `}
+                        />
+                    </div>
                 </>
-            }
-            {(caption && captionPosition === 'bottom') &&
-                <div className={captionClassName}>{caption}</div>
-            }
+            : null}
         </>
     )
 }
