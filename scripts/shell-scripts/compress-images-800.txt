@@ -1,5 +1,5 @@
 urls=(
-    "https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-post-desktop-dec-2021.png"
+    "https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-gallery-dec-2021-2.png"
 )
 
 for i in "${urls[@]}"

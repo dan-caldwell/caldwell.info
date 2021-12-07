@@ -29,7 +29,7 @@ const Image: React.FC<ImageProps> = ({
     fullWidth = true,
     width,
     height,
-    float,
+    float = null,
     center = true,
     className = '',
     clickEnlarge = true,
@@ -80,7 +80,7 @@ const Image: React.FC<ImageProps> = ({
     useEffect(() => {
         if (imageRef.current && lazyLoad) {
             const printPage = imageRef.current?.closest('.PrintPage');
-            const printPageId = Number(printPage?.dataset?.id);
+            const printPageId = Number(printPage?.dataset?.printPageId);
             if (!isNaN(printPageId) && printPageId - currentScrollItem === 1) {
                 setLazyLoad(false);
             }
@@ -90,10 +90,10 @@ const Image: React.FC<ImageProps> = ({
     return (
         <>
             <div
-                className={`${fullWidth ? 'h-full w-full flex flex-col' : ''}`}
-                style={{
-                    float
-                }}
+                className={`
+                    ${fullWidth ? 'xl:h-full xl:w-full flex flex-col' : ''}
+                    ${float ? `xl:float-${float}` : ''} float-none
+                `}
             >
                 {(caption && captionPosition === 'top') &&
                     <div className={captionClassName}>{caption}</div>

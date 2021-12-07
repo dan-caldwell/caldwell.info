@@ -31,7 +31,7 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
         <div className="flex flex-col xl:flex-row w-outer-container mx-auto justify-between border-r border-gray-300 h-screen bg-white">
             <Sidebar list={postList} />
             <main ref={mainRef} className={`
-                flex-col px-8 mt-16 w-container m-sidebar overflow-y-hidden
+                flex-col px-4 mt-16 w-container m-sidebar overflow-y-hidden
                 xl:min-h-full xl:px-0 xl:mt-0 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}
             >
                 {children}

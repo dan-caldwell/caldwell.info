@@ -33,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ list }) => {
     }, [menuOpen, mainScrollPosition]);
 
     return (
-        <div className={`Sidebar fixed top-0 w-sidebar mr-4 border-r border-l border-gray-300 flex-col justify-between flex flex-shrink-0 xl:h-full ${menuOpen ? 'h-full' : ''}`}>
+        <div className={`Sidebar xl:fixed top-0 w-sidebar xl:mr-4 xl:border-r xl:border-l xl:border-gray-300 flex-col justify-between flex flex-shrink-0 xl:h-full ${menuOpen ? 'h-full' : ''}`}>
             <div className="flex-col flex-grow xl:overflow-hidden flex">
                 <LogoHeader title="Dan Caldwell" href="/" onClickHamburger={handleClickHamburger} hamburgerVisible={!menuOpen} />
                 <div className={`flex-col xl:overflow-hidden xl:flex xl:mt-0 mt-16 ${menuOpen ? "flex" : "hidden"}`}>
@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ list }) => {
                             <a className="px-4 py-2 w-full border-b border-gray-300 hover:no-underline hover:bg-purple-50">About</a>
                         </Link>
                     </div>
-                    <div className="overscroll-contain xl:overflow-y-scroll flex-col flex-grow flex">
+                    <div className="overscroll-contain xl:overflow-y-scroll flex-col flex-grow flex bg-white">
                         {list.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
                     </div>
                 </div>

@@ -104,15 +104,19 @@
     }
 
     .w-container {
-        width: 100vw;
+        width: 100%;
     }
 
     .w-outer-container {
-        width: 74rem;
+        width: 100%;
     }
 
     .max-w-container {
         max-width: 50rem;
+    }
+
+    .w-sidebar {
+        width: 100%;
     }
 
     .w-main {
@@ -178,6 +182,10 @@
 
     .w-container {
         width: 50rem;
+    }
+
+    .w-outer-container {
+        width: 74rem;
     }
 
     .w-sidebar {
