@@ -40,7 +40,6 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     useEffect(() => {
         window.addEventListener('resize', appHeight);
         appHeight();
-        console.log('running page with sidebar appHeight')
         return () => window.removeEventListener('resize', appHeight);
     });
 

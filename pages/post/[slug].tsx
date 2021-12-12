@@ -12,6 +12,7 @@ import TitleCard from '../../components/cards/TitleCard';
 import PrintPageContainer from '../../components/content/PrintPageContainer';
 import Md from '../../components/content/Md';
 import Header from '../../components/text/Header';
+import Anchor from '../../components/basic/Anchor';
 
 const mdxComponents = {
     YouTube,
@@ -19,7 +20,8 @@ const mdxComponents = {
     SpinScroll,
     TitleCard,
     PrintPageContainer,
-    Md
+    Md,
+    Anchor
 }
 
 export const getStaticPaths = async () => {

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    --app-height: 100%;
+    --app-height: 100vh;
 }
 
 @layer base {

@@ -17,6 +17,6 @@
 [√] CSS transitions on scroll to make a more cinematic experience 
     [√] When done scrolling, remove extra margin caused by sticky
 [√] Next/previous buttons become hidden when overflow-y-scroll on PrintPageContainer
+[√] Scroll to current SidebarListItem on mobile
 [ ] When ready to switch, add Cloudfront and set up domain name
 [ ] Open portfolio links in new tab (e.g. ultracss.com)
-[ ] Scroll to current SidebarListItem on mobile

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { PostMeta } from "../../utils/types";
+import { PostContext } from "../context/PostContext";
 
 export type SidebarListItemProps = {
     post: PostMeta,
@@ -11,6 +12,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
     const [loaded, setLoaded] = useState(false);
     const { title, slug, thumbnail } = post;
     const container = useRef(null);
+    const { menuOpen } = useContext(PostContext);
 
     const containerClass = `
         ${currentPost === slug ? 'bg-purple-100' : 'xl:hover:bg-purple-50'}
@@ -22,11 +24,13 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
         const parentBox = container.current.parentElement.getBoundingClientRect();
         const containerBox = container.current.getBoundingClientRect();
         const inView = containerBox.bottom >= parentBox.top && containerBox.top <= parentBox.bottom;
-        if (currentPost === slug && (!inView || !loaded)) {
-            container.current.scrollIntoView(false);
+        if (currentPost === slug && (!inView || !loaded || window.innerWidth <= 1184)) {
+            container.current.scrollIntoView({
+                block: "center"
+            });
         }
         if (!loaded && currentPost) setLoaded(true);
-    }, [currentPost, loaded, slug]);
+    }, [currentPost, loaded, slug, menuOpen]);
 
     return (
         <div className="flex border-b border-gray-200 last:border-0" ref={container}>

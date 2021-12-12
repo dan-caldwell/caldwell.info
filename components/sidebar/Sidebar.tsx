@@ -11,26 +11,11 @@ export type SidebarProps = {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ list }) => {
-    const { currentPost, menuOpen, setMenuOpen, mainScrollPosition, setMainScrollPosition } = useContext(PostContext);
+    const { currentPost, menuOpen, setMenuOpen } = useContext(PostContext);
 
     const handleClickHamburger = () => {
-        const newMenuOpen = !menuOpen;
-        if (newMenuOpen) {
-            // Scroll to the top of the menu
-            if (window.innerHeight <= 1184) {
-                // Menu is open, so save the current scroll position of the window
-                setMainScrollPosition(window.scrollY || 0);
-                window.scrollTo(0, 0);
-            }
-        }
-        setMenuOpen(newMenuOpen);
+        setMenuOpen(!menuOpen);
     }
-
-    useEffect(() => {
-        if (!menuOpen && window.innerWidth <= 1184) {
-            window.scrollTo(0, mainScrollPosition);
-        }
-    }, [menuOpen, mainScrollPosition]);
 
     return (
         <div className={`Sidebar xl:fixed top-0 w-sidebar xl:mr-4 xl:border-r xl:border-l xl:border-gray-300 flex-col justify-between flex flex-shrink-0 xl:h-full ${menuOpen ? 'h-full' : ''}`}>

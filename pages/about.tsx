@@ -18,7 +18,7 @@ Fun Facts:
 - When I was in high school I’d go to the grocery store and get a six pack of Kool-Aid Bursts for $1, then I’d walk into town and sell the Kool-Aids at $1 each (one of my most profitable business excursions).
 - I briefly had a side business of buying broken Macbooks on eBay and would repair and resell them. Most of the time, many people will sell a broken Macbook even if just the hard drive is dead. Simply replace the hard drive and resell for profit!
 - My favorite book ever is Behave by Robert Sapolsky.
-- LinkedIn: [~dan](https://www.linkedin.com/in/~dan/)
+- LinkedIn: <a target='_blank' rel='noopener noreferrer' href='https://www.linkedin.com/in/~dan/'>~dan</a>
 `;
 
 const html = marked(md);
