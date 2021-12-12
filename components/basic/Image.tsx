@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, useContext } from 'react';
 import XButton from './XButton';
 import { PostContext } from '../context/PostContext';
+import marked from 'marked';
+import ReactHtmlParser from 'react-html-parser';
 
 type ImageProps = {
     src: string,
@@ -9,12 +11,14 @@ type ImageProps = {
     caption?: string,
     captionPosition?: 'top' | 'bottom',
     captionStyle?: 'regular' | 'italic',
+    captionAlign?: 'left' | 'center' | 'right',
     fullWidth?: boolean,
     width?: number,
     height?: number,
     clickEnlarge?: boolean,
     float?: 'left' | 'right',
     className?: string,
+    containerClassName?: string,
     center?: boolean,
     lazy?: boolean
 }
@@ -25,6 +29,7 @@ const Image: React.FC<ImageProps> = ({
     caption,
     captionPosition = 'bottom',
     captionStyle = 'regular',
+    captionAlign = 'center',
     alt,
     fullWidth = true,
     width,
@@ -32,6 +37,7 @@ const Image: React.FC<ImageProps> = ({
     float = null,
     center = true,
     className = '',
+    containerClassName = '',
     clickEnlarge = true,
     lazy = true
 }) => {
@@ -58,11 +64,13 @@ const Image: React.FC<ImageProps> = ({
 
     const captionClassName = [
         loadedSrc ? 'visible' : 'invisible',
-        center ? 'text-center' : '',
         captionPosition === 'bottom' ? 'mt-2' : '',
         captionStyle === 'italic' ? 'italic text-gray-600' : '',
-        'mb-4 last:mb-0'
+        `text-${captionAlign}`,
+        'mb-4 last:mb-0 text-lg'
     ].join(' ');
+
+    const captionHTML = <div className={captionClassName}>{ReactHtmlParser(marked(caption || ''))}</div>;
 
     useEffect(() => {
         const { width: boxWidth } = imageRef.current.getBoundingClientRect();
@@ -93,11 +101,10 @@ const Image: React.FC<ImageProps> = ({
                 className={`
                     ${fullWidth ? 'xl:h-full xl:w-full flex flex-col' : ''}
                     ${float ? `xl:float-${float}` : ''} float-none
+                    ${containerClassName}
                 `}
             >
-                {(caption && captionPosition === 'top') &&
-                    <div className={captionClassName}>{caption}</div>
-                }
+                {(caption && captionPosition === 'top') && captionHTML}
                 <div
                     className={`${fullWidth ? 'overflow-hidden' : ''}`}
                 >
@@ -119,9 +126,7 @@ const Image: React.FC<ImageProps> = ({
                         onClick={clickEnlarge ? () => setEnlarged(1) : null}
                     />
                 </div>
-                {(caption && captionPosition === 'bottom') &&
-                    <div className={captionClassName}>{caption}</div>
-                }
+                {(caption && captionPosition === 'bottom') && captionHTML}
             </div>
             {enlarged ?
                 <>
@@ -139,7 +144,7 @@ const Image: React.FC<ImageProps> = ({
                             backgroundColor: 'rgba(0, 0, 0, 0.75)'
                         }}
                     >
-                        <img 
+                        <img
                             src={src || previewSrc}
                             className={`
                                 z-30 select-none m-auto object-contain
@@ -148,7 +153,7 @@ const Image: React.FC<ImageProps> = ({
                         />
                     </div>
                 </>
-            : null}
+                : null}
         </>
     )
 }

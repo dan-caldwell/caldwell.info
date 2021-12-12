@@ -7,14 +7,19 @@ thumbnail: 'https://s3.amazonaws.com/caldwell.info/images/religion-news-service-
 
 <PrintPageContainer>
 
-<Md>
+<Md
+    direction="row"
+    className="justify-center flex-col-reverse xl:flex-row flex-wrap xl:flex-nowrap"
+>
+
 <Image
     previewSrc="https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-home-mobile-dec-2021-800x1732-s1-q90.png"
     src="https://s3.amazonaws.com/caldwell.info/images/religion-news-service-website-redesign/rns-home-mobile-dec-2021-788x1705-s0.7-q90.png"
     alt="rns mobile home page"
-    float="left"
-    className="xl:mr-4 max-w-2xs border border-gray-300 rounded-2xl shadow-lg"
+    className="xl:mr-4 max-w-2xs border border-gray-300 rounded-2xl shadow-lg mt-2 xl:mt-0"
     clickEnlarge={false}
+    fullWidth={false}
+    containerClassName="xl:h-full"
 />
 
 I rebuilt and redesigned the entire [ReligionNews.com](https://religionnews.com) frontend. ReligionNews.com gets over 2 million page views a month, so we needed a fast, highly SEO optimized site. The new frontend’s page speed is 2x faster than the previous site and SEO has been improved 15% — helping to double our Alexa ranking. The new site also has many UX improvements.

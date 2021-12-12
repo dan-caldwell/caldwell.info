@@ -52,7 +52,7 @@
     }
 
     iframe {
-        @apply w-full mb-4;
+        @apply w-full mb-4 h-full;
     }
 }
 
@@ -167,6 +167,10 @@
         height: var(--app-height);
     }
 
+    .max-h-frame {
+        max-height: 28.125rem;
+    }
+
     .min-h-min-content {
         min-height: min-content;
         min-height: -moz-min-content;
@@ -197,6 +201,10 @@
     }
 
     iframe {
-        height: 28.125rem;
+        height: 100%;
     }
 }
+
+@viewport {  
+    orientation: portrait;  
+} 

@@ -2,9 +2,11 @@ import ContentContainer from "../components/ContentContainer";
 import marked from 'marked';
 import ReactHtmlParser from 'react-html-parser';
 import Header from "../components/text/Header";
+import { useContext, useEffect } from "react";
+import { PostContext } from "../components/context/PostContext";
 
 const md = `
-<img align="right" src="https://cms.caldwell.info/wp-content/uploads/2020/12/0.jpg">
+<img class="ml-2 mb-2" align="right" src="https://cms.caldwell.info/wp-content/uploads/2020/12/0.jpg">
 
 I am interested in software, design, and great user experience.
 
@@ -22,10 +24,18 @@ Fun Facts:
 const html = marked(md);
 
 const About = () => {
+    const { setCurrentPost } = useContext(PostContext);
+
+    useEffect(() => {
+        setCurrentPost('about');
+        return () => setCurrentPost(null);
+    }, [setCurrentPost]);
+
+
     return (
         <ContentContainer className="w-container">
             <Header title="About" />
-            <div className="bg-white p-4">
+            <div className="bg-white overflow-y-scroll">
                 {ReactHtmlParser(html)}
             </div>
         </ContentContainer>

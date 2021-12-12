@@ -27,11 +27,28 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
         }, 50);
     }, [currentPost]);
 
+    const appHeight = async () => {
+        await timeout(100);
+        document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+    }
+
+    const timeout = (ms: number) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Fix screen sizing on mobile
+    useEffect(() => {
+        window.addEventListener('resize', appHeight);
+        appHeight();
+        console.log('running page with sidebar appHeight')
+        return () => window.removeEventListener('resize', appHeight);
+    });
+
     return (
-        <div className="flex flex-col xl:flex-row w-outer-container mx-auto justify-between border-r border-gray-300 h-screen bg-white">
+        <div className="flex flex-col xl:flex-row w-outer-container mx-auto xl:justify-between border-r border-gray-300 h-screen-fix bg-white">
             <Sidebar list={postList} />
             <main ref={mainRef} className={`
-                flex-col px-4 mt-16 w-container m-sidebar overflow-y-hidden
+                flex-col px-4 mt-16 w-container m-sidebar overflow-y-hidden h-full
                 xl:min-h-full xl:px-0 xl:mt-0 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}
             >
                 {children}

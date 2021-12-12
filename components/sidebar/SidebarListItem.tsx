@@ -29,7 +29,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
     }, [currentPost, loaded, slug]);
 
     return (
-        <div className="flex border-b border-gray-200" ref={container}>
+        <div className="flex border-b border-gray-200 last:border-0" ref={container}>
             <Link href={`/post/${slug}`} prefetch={false} scroll={currentPost !== slug}>
                 <a className="hover:no-underline w-full break-normal">
                     <div className={containerClass}>

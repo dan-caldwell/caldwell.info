@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import fs from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote';
-import YouTube from 'react-youtube';
+import YouTube from '../../components/content/YouTubeWrap';
 import PostUtils from '../../utils/PostUtils';
 import { PostContext } from '../../components/context/PostContext';
 import ContentContainer from '../../components/ContentContainer';
@@ -46,7 +46,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
     }
 }
 
-const Post = ({ source, meta: { title, hideTitle }, slug }) => {
+const Post = ({ source, meta: { title }, slug }) => {
     const { setCurrentPost } = useContext(PostContext);
 
     useEffect(() => {
