@@ -5,13 +5,20 @@ import SidebarListItem from "./SidebarListItem";
 import { PostContext } from "../context/PostContext";
 import Link from "next/link";
 import Footer from "./Footer";
+import SidebarGroup from "./SidebarGroup";
 
 export type SidebarProps = {
-    list: PostMeta[],
+    list: any,
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ list }) => {
     const { currentPost, menuOpen, setMenuOpen } = useContext(PostContext);
+
+    // postList.sort((a: PostMeta, b: PostMeta) => {
+    //     const aDate = new Date(a.date);
+    //     const bDate = new Date(b.date);
+    //     return bDate.getTime() - aDate.getTime();
+    // });
 
     const handleClickHamburger = () => {
         setMenuOpen(!menuOpen);
@@ -28,7 +35,13 @@ const Sidebar: React.FC<SidebarProps> = ({ list }) => {
                         </Link>
                     </div>
                     <div className="overscroll-contain xl:overflow-y-scroll flex-col flex-grow flex bg-white">
-                        {list.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
+                        {list.children.map(post => {
+                            if (!post.slug) {
+                                return <SidebarGroup key={post.name} name={post.name} children={post.children} />
+                            } else {
+                                return <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />
+                            }
+                        })}
                     </div>
                 </div>
             </div>

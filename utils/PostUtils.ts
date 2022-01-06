@@ -2,41 +2,46 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import { MDXSource, PostMeta } from './types';
+import { MDXSource } from './types';
 import marked from 'marked';
+import dirTree from 'directory-tree';
+import { PROJECTS_DIR } from './constants';
 
 export default class PostUtils {
 
-    static getPostList = ({ getHTML = false, getContent = false } = {}): PostMeta[] => {
-        // Get files from the posts director
-        const files = fs.readdirSync(path.join('posts')).filter(fileName => !fileName.includes('.DS_Store'));
+    static getPostList = ({ getHTML = false, getContent = false, flat = false } = {}) => {
 
-        // Get slugs
-        const postList = files.map(fileName => {
-            const slug = fileName.replace('.mdx', '');
+        const tree = dirTree(path.join(PROJECTS_DIR), { extensions: /\.mdx$/ });
 
-            // Get meta
-            const mdWithMeta = fs.readFileSync(path.join('posts', fileName), 'utf8');
-
-            const { data: meta, content } = matter(mdWithMeta);
-            const { title, date, excerpt, thumbnail } = meta;
-            return { 
-                slug, 
-                title,
-                date,
-                thumbnail: thumbnail || null,
-                excerpt,
-                html: getHTML ? marked(content) : null,
-                content: getContent ? content : null,
-                filePath: path.join(__dirname, '../posts', fileName)
-            }
-        });
-
-        return postList;
+        // Map through the structure tree and get metadata from each post
+        const flatOutput = [];
+        const mapTree = tree => {
+            if (!tree.children) return;
+            tree.children.forEach((child, index) => {
+                if (child.name.endsWith('.mdx')) {
+                    const slug = child.name.replace('.mdx', '');
+                    // Get meta
+                    const mdWithMeta = fs.readFileSync(path.join(child.path), 'utf8');
+                    const { data: meta, content } = matter(mdWithMeta);
+                    tree.children[index] = {
+                        ...child,
+                        ...meta,
+                        html: getHTML ? marked(content) : null,
+                        content: getContent ? content : null,
+                        slug,
+                    }
+                    if (flat) flatOutput.push(tree.children[index]);
+                }
+                mapTree(child);
+            });
+        }
+        mapTree(tree);
+        if (flat) return flatOutput;
+        return tree;
     }
 
     static getMdxSource = async ({ slug, altPath }: MDXSource) => {
-        const mdxWithMeta = fs.readFileSync(altPath || path.join('posts', slug + '.mdx'), 'utf-8');
+        const mdxWithMeta = fs.readFileSync(altPath || path.join(slug + '.mdx'), 'utf-8');
         const { content, data: meta } = matter(mdxWithMeta);
         return {
             source: await serialize(content, { scope: meta }),

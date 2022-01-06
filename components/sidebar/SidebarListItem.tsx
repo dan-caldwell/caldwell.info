@@ -34,7 +34,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({ post, currentPost }) 
 
     return (
         <div className="flex border-b border-gray-200 last:border-0" ref={container}>
-            <Link href={`/post/${slug}`} prefetch={false} scroll={currentPost !== slug}>
+            <Link href={`/${post.path.replace('.mdx', '')}/`} prefetch={false} scroll={currentPost !== slug}>
                 <a className="hover:no-underline w-full break-normal">
                     <div className={containerClass}>
                         <img src={thumbnail} className="w-16 h-16 mr-2" alt={`${title} thumbnail`} />

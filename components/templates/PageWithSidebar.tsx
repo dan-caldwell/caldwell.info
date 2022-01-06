@@ -1,7 +1,6 @@
 import React, { ReactNode, useContext, useEffect, useRef } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import PostList from '../../json/post-list.json';
-import { PostMeta } from "../../utils/types";
 import { PostContext } from "../context/PostContext";
 
 export type PageWithSidebarProps = {
@@ -9,11 +8,6 @@ export type PageWithSidebarProps = {
 }
 
 const postList = JSON.parse(PostList);
-postList.sort((a: PostMeta, b: PostMeta) => {
-    const aDate = new Date(a.date);
-    const bDate = new Date(b.date);
-    return bDate.getTime() - aDate.getTime();
-});
 
 const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     const { menuOpen, currentPost } = useContext(PostContext);
@@ -44,7 +38,7 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     });
 
     return (
-        <div className="flex flex-col xl:flex-row w-outer-container mx-auto xl:justify-between border-r border-gray-300 h-screen-fix bg-white">
+        <div className="flex flex-col xl:flex-row w-outer-container mx-auto xl:justify-between border-r border-gray-300 bg-white">
             <Sidebar list={postList} />
             <main ref={mainRef} className={`
                 flex-col px-4 mt-16 w-container m-sidebar overflow-y-hidden h-full

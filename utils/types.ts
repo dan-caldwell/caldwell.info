@@ -11,5 +11,6 @@ export type PostMeta = {
     thumbnail?: string
     html?: string
     content?: string,
-    filePath: string
+    filePath: string,
+    path?: string
 }
