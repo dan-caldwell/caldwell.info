@@ -3,15 +3,20 @@ import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXSource } from './types';
+import { ConfigCategory, sections } from '../config';
 import marked from 'marked';
 import dirTree from 'directory-tree';
-import { PROJECTS_DIR } from './constants';
 
 export default class PostUtils {
 
-    static getPostList = ({ getHTML = false, getContent = false, flat = false } = {}) => {
+    static getPostList = ({ 
+        getHTML = false, 
+        getContent = false, 
+        flat = false, 
+        section = '',
+    } = {}) => {
 
-        const tree = dirTree(path.join(PROJECTS_DIR), { extensions: /\.mdx$/ });
+        const tree = dirTree(path.join(sections[section].contentDir), { extensions: /\.mdx$/ });
 
         // Map through the structure tree and get metadata from each post
         const flatOutput = [];
@@ -34,6 +39,24 @@ export default class PostUtils {
                 }
                 mapTree(child);
             });
+            const cats = tree.children.filter((child: any) => !child.slug);
+            const posts = tree.children.filter((child: any) => child.slug);
+            // Sort the categories
+            cats.sort((a: any, b: any) => {
+                let aConfigIndex = sections[section].categories.findIndex((item: ConfigCategory) => item.name === a.name);
+                let bConfigIndex = sections[section].categories.findIndex((item: ConfigCategory) => item.name === b.name);
+                if (aConfigIndex === -1) aConfigIndex = Number.MAX_SAFE_INTEGER;
+                if (bConfigIndex === -1) bConfigIndex = Number.MAX_SAFE_INTEGER;
+                return aConfigIndex - bConfigIndex;
+            });
+            // Sort the posts
+            posts.sort((a: any, b: any) => {
+                const aDate = new Date(a.date);
+                const bDate = new Date(b.date);
+                return bDate.getTime() - aDate.getTime();
+            });
+            // Prioritize posts, then categories, and swap tree.children
+            tree.children = [...posts, ...cats];
         }
         mapTree(tree);
         if (flat) return flatOutput;

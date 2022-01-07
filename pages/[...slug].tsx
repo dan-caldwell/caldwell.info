@@ -12,6 +12,7 @@ import Md from '../components/content/Md';
 import Header from '../components/text/Header';
 import Anchor from '../components/basic/Anchor';
 import { PostMeta } from '../utils/types';
+import { sections } from '../config';
 
 const mdxComponents = {
     YouTube,
@@ -24,18 +25,22 @@ const mdxComponents = {
 }
 
 export const getStaticPaths = async () => {
+    
+    const allPaths = [];
+    for (const section in sections) {
+        const postList = PostUtils.getPostList({
+            flat: true,
+            section
+        });
+        const paths = (postList as PostMeta[]).map(post => ({
+            params: {
+                slug: post.path.replace('.mdx', '').split('/')
+            }
+        }));
+        allPaths.push(...paths);
+    }
 
-    const postList = PostUtils.getPostList({
-        flat: true
-    });
-
-    const paths = (postList as PostMeta[]).map(post => ({
-        params: {
-            slug: post.path.replace('.mdx', '').split('/')
-        }
-    }));
-
-    return { paths, fallback: false }
+    return { paths: allPaths, fallback: false }
 }
 
 export const getStaticProps = async ({ params: { slug } }) => {

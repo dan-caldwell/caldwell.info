@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { PostMeta } from "../../utils/types";
+import React, { Fragment, useContext, useState } from "react";
 import LogoHeader from './LogoHeader';
 import SidebarListItem from "./SidebarListItem";
 import { PostContext } from "../context/PostContext";
@@ -8,20 +7,29 @@ import Footer from "./Footer";
 import SidebarGroup from "./SidebarGroup";
 
 export type SidebarProps = {
-    list: any,
+    lists: any[],
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ list }) => {
+const Sidebar: React.FC<SidebarProps> = ({ lists }) => {
+    const [hiddenSections, setHiddenSections] = useState([]);
     const { currentPost, menuOpen, setMenuOpen } = useContext(PostContext);
-
-    // postList.sort((a: PostMeta, b: PostMeta) => {
-    //     const aDate = new Date(a.date);
-    //     const bDate = new Date(b.date);
-    //     return bDate.getTime() - aDate.getTime();
-    // });
 
     const handleClickHamburger = () => {
         setMenuOpen(!menuOpen);
+    }
+
+    // Show/hide section when clicking on the section label
+    const handleClickSection = (sectionName: string) => {
+        setHiddenSections(oldHiddenSections => {
+            const newHiddenSections = [...oldHiddenSections];
+            const indexInHidden = newHiddenSections.indexOf(sectionName);
+            if (indexInHidden === -1) {
+                newHiddenSections.push(sectionName);
+            } else {
+                newHiddenSections.splice(indexInHidden, 1);
+            }
+            return newHiddenSections;
+        });
     }
 
     return (
@@ -34,15 +42,29 @@ const Sidebar: React.FC<SidebarProps> = ({ list }) => {
                             <a className="px-4 py-2 w-full border-b border-gray-300 hover:no-underline hover:bg-purple-50">About</a>
                         </Link>
                     </div>
-                    <div className="overscroll-contain xl:overflow-y-scroll flex-col flex-grow flex bg-white">
-                        {list.children.map(post => {
-                            if (!post.slug) {
-                                return <SidebarGroup key={post.name} name={post.name} children={post.children} />
-                            } else {
-                                return <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />
-                            }
-                        })}
-                    </div>
+                    {lists.map(list => (
+                        <Fragment
+                            key={list.name}
+                        >
+                            <div
+                                onClick={() => handleClickSection(list.name)}
+                                className="cursor-pointer"
+                            >{list.name}</div>
+                            <div
+                                className={`overscroll-contain xl:overflow-y-scroll flex-col flex-grow flex bg-white
+                                ${hiddenSections.includes(list.name) ? 'hidden' : ''}
+                                `}
+                            >
+                                {list.children.map((post: any) => {
+                                    if (!post.slug) {
+                                        return <SidebarGroup key={post.name} name={post.name} list={post.children} />
+                                    } else {
+                                        return <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />
+                                    }
+                                })}
+                            </div>
+                        </Fragment>
+                    ))}
                 </div>
             </div>
             <Footer />

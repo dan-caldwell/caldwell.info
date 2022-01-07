@@ -3,14 +3,16 @@ import SidebarListItem from "./SidebarListItem";
 
 const SidebarGroup = ({
     name = '',
-    children = [],
+    list = [],
     currentPost = ''
 }) => {
     return (
         <div>
-            <div>{name}</div>
+            <div
+                className="text-xs"
+            >{name}</div>
             <div>
-                {children.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
+                {list.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
             </div>
         </div>
     )

@@ -5,7 +5,6 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
 import { JSDOM } from 'jsdom';
-import { PostMeta } from '../../utils/types';
 import sharp from 'sharp';
 import mime from 'mime-types';
 import got from 'got';
@@ -175,8 +174,10 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET,
 });
 
-const handleImages = async () => {
-    const postList = PostUtils.getPostList({ getHTML: true, flat: true });
+const handleImages = async ({
+    section
+}) => {
+    const postList = PostUtils.getPostList({ getHTML: true, flat: true, section });
     const imagesToUpload = await HandleImages.findNonUploadedImages({ postList });
     for (const [index, { src, buffer, isThumbnail, mdFilePath, slug, alt }] of imagesToUpload.entries()) {
         const fileName = src.split('/').pop();
