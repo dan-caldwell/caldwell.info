@@ -11,7 +11,7 @@ export type SidebarProps = {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ lists }) => {
-    const [hiddenSections, setHiddenSections] = useState([]);
+    const [openSection, setOpenSection] = useState<string | null>("post");
     const { currentPost, menuOpen, setMenuOpen } = useContext(PostContext);
 
     const handleClickHamburger = () => {
@@ -20,16 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ lists }) => {
 
     // Show/hide section when clicking on the section label
     const handleClickSection = (sectionName: string) => {
-        setHiddenSections(oldHiddenSections => {
-            const newHiddenSections = [...oldHiddenSections];
-            const indexInHidden = newHiddenSections.indexOf(sectionName);
-            if (indexInHidden === -1) {
-                newHiddenSections.push(sectionName);
-            } else {
-                newHiddenSections.splice(indexInHidden, 1);
-            }
-            return newHiddenSections;
-        });
+        setOpenSection(openSection === sectionName ? null : sectionName);
     }
 
     return (
@@ -49,15 +40,20 @@ const Sidebar: React.FC<SidebarProps> = ({ lists }) => {
                             <div
                                 onClick={() => handleClickSection(list.name)}
                                 className="cursor-pointer"
-                            >{list.name}</div>
+                            >{list.label || list.name}</div>
                             <div
                                 className={`overscroll-contain xl:overflow-y-scroll flex-col flex-grow flex bg-white
-                                ${hiddenSections.includes(list.name) ? 'hidden' : ''}
+                                    ${openSection === list.name ? '' : 'hidden'}
                                 `}
                             >
                                 {list.children.map((post: any) => {
                                     if (!post.slug) {
-                                        return <SidebarGroup key={post.name} name={post.name} list={post.children} />
+                                        // Format the name if necessary
+                                        const formattedName = post.name
+                                            .split('-')
+                                            .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+                                            .join(' ');
+                                        return <SidebarGroup key={post.name} title={post.title || formattedName} list={post.children} />
                                     } else {
                                         return <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />
                                     }

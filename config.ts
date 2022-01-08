@@ -26,6 +26,7 @@ export const postProperties = {
 export const sections = {
     projects: {
         contentDir: 'post',
+        label: 'Projects',
         categories: [
             {
                 title: 'Code',
@@ -39,6 +40,7 @@ export const sections = {
     },
     blog: {
         contentDir: 'blog',
+        label: 'Blog',
         categories: [
             {
                 title: 'Life',

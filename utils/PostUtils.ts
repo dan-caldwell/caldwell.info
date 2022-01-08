@@ -9,18 +9,22 @@ import dirTree from 'directory-tree';
 
 export default class PostUtils {
 
-    static getPostList = ({ 
-        getHTML = false, 
-        getContent = false, 
-        flat = false, 
+    static getPostList = ({
+        getHTML = false,
+        getContent = false,
+        flat = false,
         section = '',
     } = {}) => {
 
-        const tree = dirTree(path.join(sections[section].contentDir), { extensions: /\.mdx$/ });
+        const contentDir = sections[section].contentDir;
+
+        const tree = dirTree(path.join(contentDir), { extensions: /\.mdx$/ });
 
         // Map through the structure tree and get metadata from each post
         const flatOutput = [];
         const mapTree = tree => {
+            // Add label
+            if (tree.path === contentDir) tree.label = sections[section].label;
             if (!tree.children) return;
             tree.children.forEach((child, index) => {
                 if (child.name.endsWith('.mdx')) {
@@ -49,6 +53,12 @@ export default class PostUtils {
                 if (bConfigIndex === -1) bConfigIndex = Number.MAX_SAFE_INTEGER;
                 return aConfigIndex - bConfigIndex;
             });
+            // Add appropriate metadata values to each category
+            const mappedCats = cats.map((item: ConfigCategory) => {
+                const configObj = sections[section].categories.find((cat: ConfigCategory) => cat.name === item.name);
+                if (configObj) return {...item, ...configObj}
+                return item;
+            });
             // Sort the posts
             posts.sort((a: any, b: any) => {
                 const aDate = new Date(a.date);
@@ -56,7 +66,7 @@ export default class PostUtils {
                 return bDate.getTime() - aDate.getTime();
             });
             // Prioritize posts, then categories, and swap tree.children
-            tree.children = [...posts, ...cats];
+            tree.children = [...posts, ...mappedCats];
         }
         mapTree(tree);
         if (flat) return flatOutput;

@@ -2,7 +2,7 @@ import React from "react";
 import SidebarListItem from "./SidebarListItem";
 
 const SidebarGroup = ({
-    name = '',
+    title = '',
     list = [],
     currentPost = ''
 }) => {
@@ -10,7 +10,7 @@ const SidebarGroup = ({
         <div>
             <div
                 className="text-xs"
-            >{name}</div>
+            >{title}</div>
             <div>
                 {list.map(post => <SidebarListItem currentPost={currentPost} key={post.slug} post={post} />)}
             </div>
