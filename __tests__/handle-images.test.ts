@@ -2,7 +2,7 @@ import { HandleImages } from '../scripts/handle-images/handle-images';
 import PostUtils from '../utils/PostUtils';
 
 test("convertImage", async () => {
-    const postList = PostUtils.getPostList({ getHTML: true });
+    const postList = PostUtils.getPostList({ getHTML: true, flat: true, section: 'projects' });
     const imagesToUpload = await HandleImages.findNonUploadedImages({ postList });
     for (const { src, buffer, isThumbnail, mdFilePath, slug } of imagesToUpload) {
         // Resize images, convert to jpg

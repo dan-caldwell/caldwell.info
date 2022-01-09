@@ -20,3 +20,5 @@
 [√] Scroll to current SidebarListItem on mobile
 [ ] When ready to switch, add Cloudfront and set up domain name
 [ ] Open portfolio links in new tab (e.g. ultracss.com)
+[ ] When clicking from fixed height post -> scrollable post, remove background color stutter
+[ ] Sidebar categories

@@ -1,19 +1,14 @@
 import React, { ReactNode, useContext, useEffect, useRef } from "react";
 import Sidebar from "../sidebar/Sidebar";
-import PostList from '../../json/post-list.json';
-import { PostMeta } from "../../utils/types";
 import { PostContext } from "../context/PostContext";
+import ProjectsList from '../../json/projects-post-list.json';
+import BlogList from '../../json/blog-post-list.json';
 
 export type PageWithSidebarProps = {
     children: ReactNode,
 }
 
-const postList = JSON.parse(PostList);
-postList.sort((a: PostMeta, b: PostMeta) => {
-    const aDate = new Date(a.date);
-    const bDate = new Date(b.date);
-    return bDate.getTime() - aDate.getTime();
-});
+const listsOfPosts = [ProjectsList, BlogList].map(item => JSON.parse(item));
 
 const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     const { menuOpen, currentPost } = useContext(PostContext);
@@ -44,13 +39,15 @@ const PageWithSidebar: React.FC<PageWithSidebarProps> = ({ children }) => {
     });
 
     return (
-        <div className="flex flex-col xl:flex-row w-outer-container mx-auto xl:justify-between border-r border-gray-300 h-screen-fix bg-white">
-            <Sidebar list={postList} />
+        <div className="flex flex-col xl:flex-row xl:justify-between bg-gray-100">
+            <Sidebar lists={listsOfPosts} />
             <main ref={mainRef} className={`
-                flex-col px-4 mt-16 w-container m-sidebar overflow-y-hidden h-full
+                flex-col px-4 mt-16 m-sidebar overflow-y-hidden h-full w-full
                 xl:min-h-full xl:px-0 xl:mt-0 ${menuOpen ? 'hidden xl:flex' : 'flex'}`}
             >
-                {children}
+                <div className="mx-auto w-container h-full w-full flex-col flex">
+                    {children}
+                </div>
             </main>
         </div>
     )

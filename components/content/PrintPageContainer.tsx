@@ -21,7 +21,7 @@ const PrintPageContainer = ({ children }) => {
     return (
         <>
             {children.length &&
-                <div className="flex justify-center border-t border-b border-gray-300 mb-4 py-1 sticky top-0 bg-white z-10">
+                <div className="flex justify-center border-t border-b border-gray-300 mb-4 py-1 sticky top-0 z-10">
                     <NextPreviousButtons currentItem={currentScrollItem + 1} totalItems={children.length} onNavigateSlide={handleNavigateSlide}>
                         <ScrollProgress numItems={children.length} currentItem={currentScrollItem + 1} />
                     </NextPreviousButtons>

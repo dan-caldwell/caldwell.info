@@ -20,12 +20,12 @@ const NextPreviousButtons: React.FC<NextPreviousButtonsProps> = ({ onNavigateSli
     return (
         <>
             <button
-                className={`ml-12 w-8 h-8 border border-gray-300 rounded-full ${currentItem === 1 ? 'invisible' : ''}`}
+                className={`ml-12 w-8 h-8 border transition-colors bg-gray-50 hover:bg-white border-gray-300 rounded-full ${currentItem === 1 ? 'invisible' : ''}`}
                 onClick={() => onNavigateSlide('previous')}
             >{arrowLeft}</button>
             {children}
             <button
-                className={`mr-12 w-8 h-8 border border-gray-300 rounded-full ${currentItem !== totalItems ? '' : 'invisible'}`}
+                className={`mr-12 w-8 h-8 border transition-colors bg-gray-50 hover:bg-white border-gray-300 rounded-full ${currentItem !== totalItems ? '' : 'invisible'}`}
                 onClick={() => onNavigateSlide('next')}
             >{arrowRight}</button>
         </>

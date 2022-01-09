@@ -2,8 +2,10 @@ import ContentContainer from "../components/ContentContainer";
 import marked from 'marked';
 import ReactHtmlParser from 'react-html-parser';
 import Header from "../components/text/Header";
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { PostContext } from "../components/context/PostContext";
+import Head from "next/head";
+import AppHead from "../components/basic/AppHead";
 
 const md = `
 <img class="ml-2 mb-2" align="right" src="https://cms.caldwell.info/wp-content/uploads/2020/12/0.jpg">
@@ -34,8 +36,9 @@ const About = () => {
 
     return (
         <ContentContainer className="w-container">
+            <AppHead title="About" />
             <Header title="About" />
-            <div className="bg-white overflow-y-scroll">
+            <div className="overflow-y-scroll">
                 {ReactHtmlParser(html)}
             </div>
         </ContentContainer>
