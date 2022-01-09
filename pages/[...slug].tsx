@@ -13,6 +13,7 @@ import Header from '../components/text/Header';
 import Anchor from '../components/basic/Anchor';
 import { PostMeta } from '../utils/types';
 import { sections } from '../config';
+import Head from 'next/head';
 
 const mdxComponents = {
     YouTube,
@@ -56,15 +57,19 @@ export const getStaticProps = async ({ params: { slug } }) => {
 }
 
 const Post = ({ source, meta: { title, layout }, slug }) => {
-    const { setCurrentPost } = useContext(PostContext);
+    const { setCurrentPost, setOpenSection } = useContext(PostContext);
 
     useEffect(() => {
-        setCurrentPost(slug);
+        setCurrentPost(slug.join('/'));
+        setOpenSection(slug[0]);
         return () => setCurrentPost(null);
-    }, [setCurrentPost, slug]);
+    }, [setCurrentPost, setOpenSection, slug]);
 
     return (
         <ContentContainer layout={layout}>
+            <Head>
+                <title>{title} - Dan Caldwell</title>
+            </Head>
             <Header title={title} />
             <MDXRemote {...source} components={mdxComponents} />
         </ContentContainer>

@@ -150,6 +150,7 @@ const Image: React.FC<ImageProps> = ({
                                 z-30 select-none m-auto object-contain
                                 w-auto h-full max-h-full max-w-full
                             `}
+                            alt={alt}
                         />
                     </div>
                 </>

@@ -4,6 +4,7 @@
 
 :root {
     --app-height: 100vh;
+    --sidebar-width: 18rem;
 }
 
 @layer base {
@@ -53,6 +54,10 @@
 
     iframe {
         @apply w-full mb-4 h-full;
+    }
+
+    .SidebarGroup:last-child .SidebarListItem {
+        border-bottom-width: 0;
     }
 }
 
@@ -120,7 +125,7 @@
     }
 
     .w-main {
-        width: calc(100vw - 20rem);
+        width: calc(100vw - var(--sidebar-width));
     }
 
     .w-print-page {
@@ -176,6 +181,11 @@
         min-height: -moz-min-content;
         min-height: -webkit-min-content;
     }
+
+    .scrollbar-width-0 {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 }
 
 @screen xl {
@@ -193,11 +203,11 @@
     }
 
     .w-sidebar {
-        @apply w-80;
+        width: var(--sidebar-width);
     }
 
     .m-sidebar {
-        margin-left: 22rem;
+        margin-left: var(--sidebar-width);
     }
 
     iframe {

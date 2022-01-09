@@ -18,9 +18,9 @@ const LogoHeader: React.FC<LogoHeaderProps> = ({ title, href, onClickHamburger, 
             xl:hover:bg-purple-50 xl:static"
         >
             <Link href={href}>
-                <a className="text-black p-4 hover:no-underline flex items-center xl:w-full justify-start">
+                <a className="text-black px-4 py-2 hover:no-underline flex items-center xl:w-full justify-start">
                     <Logo className="max-w-full w-8 h-8 mr-3 flex" fill="black" />
-                    <div className="text-2xl font-bold w-full">{title}</div>
+                    <div className="text-xl w-full">{title}</div>
                 </a>
             </Link>
             <div className="xl:hidden" onClick={onClickHamburger}>
